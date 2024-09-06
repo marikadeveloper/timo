@@ -1,4 +1,4 @@
-# Timo
+# Timo (Work in Progress 👷‍♀️)
 
 This is a Chrome Extension that allows users to keep track of their work.
 It consists of a timer that can be started and stopped, that will keep track of the time spent on a task.
