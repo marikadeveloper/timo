@@ -1,4 +1,5 @@
-import './App.css';
+import './App.scss';
+import './data/db';
 
 function App() {
   // const changeColorOnClick = async () => {

@@ -1,6 +1,6 @@
 # Timo (Work in Progress 👷‍♀️)
 
-This is a Chrome Extension that allows users to keep track of their work.
+This will be a Chrome Extension that allows users to keep track of their work.
 It consists of a timer that can be started and stopped, that will keep track of the time spent on a task.
 The user can also add a description to the task, and the task will be saved in the browser's local storage.
 
