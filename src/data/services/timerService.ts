@@ -23,3 +23,5 @@ const endTimer = async ({ taskId }: { taskId: number }) => {
   task.timers[task.timers.length - 1].end = new Date();
   return db.tasks.update(taskId, { timers: task.timers });
 };
+
+export { endTimer, startTimer };

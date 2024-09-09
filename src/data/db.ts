@@ -15,14 +15,6 @@ const db = new Dexie('TasksDatabase') as Dexie & {
   >;
 };
 
-/**
- * TODO: add a code to the task?
- * - The code could be auto generated, like PROJECT_CODE-TASK_INDEX
- * - What if no project? Maybe just the task ID?
- *
- * TODO: auto generate the project code?
- * - The code could be auto generated, like the first 3 or 4 letters of the project name uppercase
- */
 // Schema declaration:
 db.version(1).stores({
   tasks: '++id, code, createdAt, description, timers, parentId, projectId',
