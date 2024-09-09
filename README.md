@@ -17,9 +17,11 @@ The only advantage of this extension is that it is simple and easy to use, it is
 ## Features
 
 - Start and stop a timer
+- Create tasks and subtasks
 - View all tasks created, divided by day
 - Delete tasks
 - Edit tasks
+  - ? Merge tasks (combine two tasks into one)
 - Export tasks to a CSV file
 
 ## Installation (Temp solution until I publish it on the Chrome Web Store!)
