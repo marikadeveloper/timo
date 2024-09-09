@@ -258,12 +258,14 @@ const formatTasksToCsv = (
 
     const duration =
       getActivityDuration(task.timers)?.totalDurationString || '-';
+
     if (exportType !== 'day' && (i === 0 || isNewDay(tasks[i - 1], task))) {
       csv += ',,,,\n';
       csv += `${dayjs(task.createdAt).format('DD/MM/YYYY')},,,,\n`;
     }
 
     const projectName = task.projectId ? task.project?.code || '' : '';
+
     csv += `"${projectName}","${task.description}",${timers.join(
       ' / ',
     )},${duration}\n`;
@@ -296,3 +298,5 @@ const downloadCsv = (
   link.click();
   document.body.removeChild(link);
 };
+
+export { exportTasks };

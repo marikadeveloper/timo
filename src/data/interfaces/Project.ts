@@ -1,18 +1,18 @@
 interface Project {
   id: number;
-  code?: string;
-  name: string;
+  code: string;
   color: string;
+  name: string;
 }
 interface ProjectCreateInput {
   code?: string;
-  name: string;
   color: string;
+  name: string;
 }
 interface ProjectUpdateInput {
   id: number;
   code?: string;
-  name?: string;
   color?: string;
+  name?: string;
 }
 export type { Project, ProjectCreateInput, ProjectUpdateInput };

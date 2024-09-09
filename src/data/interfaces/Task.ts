@@ -2,19 +2,25 @@ import Timer from './Timer';
 
 interface Task {
   id: number;
-  description: string;
-  timers: Timer[];
-  projectId?: number;
+  code: string;
   createdAt: Date;
+  description: string;
   parentId?: number;
+  projectId?: number;
+  timers: Timer[];
 }
 interface TaskCreateInput {
+  code: string;
+  createdAt: Date;
   description: string;
+  parentId?: number;
   projectId?: number;
+  timers: Timer[];
 }
 interface TaskUpdateInput {
   id: number;
   description?: string;
+  parentId?: number;
   projectId?: number;
 }
 export type { Task, TaskCreateInput, TaskUpdateInput };
@@ -26,5 +32,5 @@ Being used to relational databases, I would have a table for tasks and a table f
 with a foreign key in the timers table to the tasks table.
 I am doing this at the moment considering that the user will have more timers than tasks
 and that the timers are not being shared between tasks.
-This approach might have quickest reads, but it will have slower writes.
+This approach might have quickest reads
  */

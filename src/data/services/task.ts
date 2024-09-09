@@ -19,15 +19,38 @@ const getTaskById = async ({ taskId }: { taskId: number }) => {
 };
 
 const createTask = async ({ description, projectId }: TaskCreateInput) => {
-  if (!description?.trim()) {
-    throw new Error('Description is required');
+  try {
+    if (!description?.trim()) {
+      throw new Error('Description is required');
+    }
+
+    const taskId = await db.tasks.add({
+      description,
+      projectId,
+      code: '', // Temporary code
+      createdAt: new Date(),
+      timers: [{ start: new Date(), end: undefined }],
+    });
+
+    if (!taskId) {
+      throw new Error('Failed to create task');
+    }
+
+    let taskCode = taskId.toString();
+    if (projectId) {
+      const project = await db.projects.get(projectId);
+      if (project) {
+        taskCode = `${project.code}-${taskId}`;
+      }
+    }
+
+    await db.tasks.update(taskId, { code: taskCode });
+
+    return taskId;
+  } catch (error) {
+    console.error('Error creating task:', error);
+    throw new Error('Failed to create task');
   }
-  return db.tasks.add({
-    description,
-    projectId,
-    createdAt: new Date(),
-    timers: [{ start: new Date(), end: undefined }],
-  });
 };
 
 const updateTask = async ({ id, description, projectId }: TaskUpdateInput) => {
