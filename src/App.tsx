@@ -1,5 +1,11 @@
 import './App.scss';
-import './data/db';
+import Layout from './components/layout/index.tsx';
+import './data/db.ts';
+import db from './data/db.ts';
+import CurrentView from './views/CurrentView.tsx';
+
+console.log('tasks', await db.tasks.toArray());
+console.log('projects', await db.projects.toArray());
 
 function App() {
   // const changeColorOnClick = async () => {
@@ -12,9 +18,9 @@ function App() {
   //   });
   // };
   return (
-    <>
-      <h1>Hello there!</h1>
-    </>
+    <Layout>
+      <CurrentView />
+    </Layout>
   );
 }
 

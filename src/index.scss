@@ -1,0 +1,15 @@
+@import './assets/scss/variables.scss';
+@import './assets/scss/typography.scss';
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+}
+div#root {
+  border: 1px solid black;
+  width: var(--popup-width);
+}

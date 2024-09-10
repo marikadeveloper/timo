@@ -1,0 +1,11 @@
+#skip-link {
+  background: #ffffff;
+  position: absolute;
+  top: -100%;
+  transition: top 0.3s;
+  z-index: 1000;
+  &:focus,
+  &:active {
+    top: 0;
+  }
+}

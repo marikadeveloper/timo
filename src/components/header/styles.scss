@@ -1,0 +1,26 @@
+.header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 4px var(--horizontal-padding);
+
+  &__logo {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    h4 {
+      margin-bottom: 0;
+    }
+  }
+
+  nav {
+    ul {
+      align-items: center;
+      display: flex;
+      gap: 8px;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
