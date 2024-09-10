@@ -1,5 +1,6 @@
 import logo from '../../assets/images/logo.svg';
 import { useViewContext } from '../../context/view-context';
+import { DEFAULT_VIEW } from '../../utils/viewUtils';
 import HeaderNavButton from '../header-nav-button';
 import './styles.scss';
 
@@ -7,13 +8,15 @@ function Header() {
   const { view, setView } = useViewContext();
   return (
     <header className='header'>
-      <section className='header__logo'>
+      <button
+        className='header__logo'
+        onClick={() => setView(DEFAULT_VIEW)}>
         <img
           src={logo}
           alt='Timo Logo, a clock icon'
         />
         <h4>Timo</h4>
-      </section>
+      </button>
       <nav>
         <ul>
           <li>

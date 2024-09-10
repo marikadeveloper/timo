@@ -6,8 +6,12 @@
 
   &__logo {
     align-items: center;
+    background-color: unset;
+    border: none;
     display: flex;
+    font-size: 14px;
     gap: 8px;
+    padding: 0;
     h4 {
       margin-bottom: 0;
     }
