@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
-import db from '../db';
-import { ExportType } from '../interfaces/Export';
-import { Project } from '../interfaces/Project';
-import { Task } from '../interfaces/Task';
+import db from '../data/db';
+import { ExportType } from '../data/interfaces/Export';
+import { Project } from '../data/interfaces/Project';
+import { Task } from '../data/interfaces/Task';
 import { getTaskDurationString } from './taskUtils';
 
 export const getExportTitle = (

@@ -2,7 +2,7 @@ import './App.scss';
 import Layout from './components/layout/index.tsx';
 import './data/db.ts';
 import db from './data/db.ts';
-import CurrentView from './views/CurrentView.tsx';
+import CurrentView from './views/current-view/index.tsx';
 
 console.log('tasks', await db.tasks.toArray());
 console.log('projects', await db.projects.toArray());

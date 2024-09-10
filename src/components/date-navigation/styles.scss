@@ -1,0 +1,9 @@
+.date-navigation {
+  align-items: center;
+  display: grid;
+  grid-template-columns: min-content 120px min-content;
+  span {
+    font-size: 17px;
+    justify-self: center;
+  }
+}

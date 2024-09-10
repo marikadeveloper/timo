@@ -1,7 +1,7 @@
-import logo from '../../assets/images/logo.svg';
 import { useViewContext } from '../../context/view-context';
 import { DEFAULT_VIEW } from '../../utils/viewUtils';
 import HeaderNavButton from '../header-nav-button';
+import Icon from '../icon';
 import './styles.scss';
 
 function Header() {
@@ -11,9 +11,9 @@ function Header() {
       <button
         className='header__logo'
         onClick={() => setView(DEFAULT_VIEW)}>
-        <img
-          src={logo}
-          alt='Timo Logo, a clock icon'
+        <Icon
+          name='logo'
+          ariaLabel='Timo Logo, a clock icon'
         />
         <h4>Timo</h4>
       </button>
