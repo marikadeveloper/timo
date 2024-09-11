@@ -1,25 +1,32 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import DateNavigation from '../../components/date-navigation';
+import DatePin from '../../components/date-pin';
 import { useLiveTasks } from '../../data/hooks/exportHooks';
+import { getLocalStoragePinnedDate } from '../../utils';
 import './styles.scss';
 
 const today = dayjs();
 
 function Tasks() {
-  const [date, setDate] = useState(today);
+  const [date, setDate] = useState<dayjs.Dayjs>(
+    () => getLocalStoragePinnedDate() || today,
+  );
   const { tasks } = useLiveTasks(date);
 
   return (
-    <div>
+    <div className='tasks'>
       <h2>Tasks</h2>
-      <DateNavigation
-        dateChanged={setDate}
-        defaultDate={today}
-      />
-      {/* TODO: add a "pin" button to pin the current date, if you go to a date 
-      then close the popup, the date resets and you need to return to the target 
-      date by navigating */}
+      <section className='tasks__navigation'>
+        <DateNavigation
+          dateChanged={setDate}
+          defaultDate={today}
+        />
+        <DatePin date={date} />
+      </section>
+
+      {/* TODO: add a mark to get to today's date */}
+      {/* TODO: add export btton */}
     </div>
   );
 }

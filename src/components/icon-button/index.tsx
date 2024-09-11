@@ -6,11 +6,12 @@ function IconButton({
   iconAriaLabel,
   iconName,
   onClick,
+  variant = 'whiteBg',
 }: IconButtonProps) {
   return (
     <button
       aria-label={ariaLabel}
-      className='icon-button'
+      className={`icon-button icon-button--${variant}`}
       onClick={onClick}>
       <Icon
         ariaLabel={iconAriaLabel}
@@ -25,6 +26,7 @@ type IconButtonProps = {
   iconAriaLabel: string;
   iconName: string;
   onClick: () => void;
+  variant?: 'blackBg' | 'whiteBg';
 };
 
 export default IconButton;

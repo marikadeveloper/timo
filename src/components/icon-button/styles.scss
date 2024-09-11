@@ -1,13 +1,22 @@
+@import './src/assets/scss/mixins.scss';
+
 .icon-button {
-  background: unset;
-  border: 1px solid #000;
-  border-radius: 6px;
-  cursor: pointer;
-  margin: 0;
+  @include base-button;
   padding: 2px;
 
   &:active {
     position: relative;
     top: 1px;
+  }
+
+  &--whiteBg {
+    background: #fff;
+  }
+
+  &--blackBg {
+    background: #000;
+    svg {
+      fill: #fff;
+    }
   }
 }

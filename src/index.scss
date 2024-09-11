@@ -1,5 +1,6 @@
-@import './assets/scss/variables.scss';
-@import './assets/scss/typography.scss';
+@import './src/assets/scss/variables.scss';
+@import './src/assets/scss/typography.scss';
+@import './src/assets/scss/mixins.scss';
 
 * {
   box-sizing: border-box;
