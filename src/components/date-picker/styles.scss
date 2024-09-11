@@ -1,0 +1,9 @@
+.date-picker {
+  .react-date-picker__wrapper {
+    border: none;
+  }
+  .react-date-picker__inputGroup {
+    min-width: calc((4px * 2) + 0.54em * 8 + 0.217em * 2);
+    padding-left: 8px;
+  }
+}

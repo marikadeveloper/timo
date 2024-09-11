@@ -20,7 +20,7 @@ function Tasks() {
       <section className='tasks__navigation'>
         <DateNavigation
           dateChanged={setDate}
-          defaultDate={today}
+          defaultDate={date}
         />
         <DatePin date={date} />
       </section>
