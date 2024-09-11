@@ -5,7 +5,7 @@ import { Project } from '../data/interfaces/Project';
 import { Task } from '../data/interfaces/Task';
 import { getTaskDurationString } from './taskUtils';
 
-export const getExportTitle = (
+const getExportTitle = (
   exportType: ExportType,
   rangeStart?: Date,
   rangeEnd?: Date,
@@ -28,7 +28,7 @@ export const getExportTitle = (
   return '';
 };
 
-export const getExportFileName = (
+const getExportFileName = (
   exportType: ExportType,
   rangeStart?: Date,
   rangeEnd?: Date,
@@ -51,7 +51,7 @@ export const getExportFileName = (
   return '';
 };
 
-export const validateExportInput = (
+const validateExportInput = (
   exportType: ExportType,
   rangeStart?: Date,
   rangeEnd?: Date,
@@ -61,11 +61,11 @@ export const validateExportInput = (
     throw new Error('Missing range start or range end');
 };
 
-export const initializeCsvHeader = (exportTitle: string): string => {
+const initializeCsvHeader = (exportTitle: string): string => {
   return `${exportTitle},,,,\nProject,Task,Time,Duration\n`;
 };
 
-export const fetchTasksToExport = async (
+const fetchTasksToExport = async (
   exportType: ExportType,
   rangeStart?: Date,
   rangeEnd?: Date,
@@ -80,7 +80,7 @@ export const fetchTasksToExport = async (
     .toArray();
 };
 
-export const attachProjectAndParentToTasks = async (
+const attachProjectAndParentToTasks = async (
   tasks: (Task & { project?: Project; parent?: Task })[],
 ): Promise<void> => {
   await Promise.all(
@@ -95,10 +95,21 @@ export const attachProjectAndParentToTasks = async (
   );
 };
 
-export const formatTasksToCsv = (
+const formatTasksToCsv = (
   tasks: (Task & { project?: Project })[],
   exportType: ExportType,
 ): string => {
+  const isNewDay = (prevTask: Task, currentTask: Task): boolean => {
+    return (
+      dayjs(prevTask.createdAt).format('DD/MM/YYYY') !==
+      dayjs(currentTask.createdAt).format('DD/MM/YYYY')
+    );
+  };
+
+  /**
+   * TODO: add parent task to the CSV
+   */
+
   return tasks
     .map((task, i) => {
       const timers = task.timers
@@ -120,14 +131,7 @@ export const formatTasksToCsv = (
     .join('');
 };
 
-const isNewDay = (prevTask: Task, currentTask: Task): boolean => {
-  return (
-    dayjs(prevTask.createdAt).format('DD/MM/YYYY') !==
-    dayjs(currentTask.createdAt).format('DD/MM/YYYY')
-  );
-};
-
-export const downloadTasksCsv = (
+const downloadTasksCsv = (
   csv: string,
   exportType: ExportType,
   rangeStart?: Date,
@@ -144,4 +148,15 @@ export const downloadTasksCsv = (
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+};
+
+export {
+  attachProjectAndParentToTasks,
+  downloadTasksCsv,
+  fetchTasksToExport,
+  formatTasksToCsv,
+  getExportFileName,
+  getExportTitle,
+  initializeCsvHeader,
+  validateExportInput,
 };

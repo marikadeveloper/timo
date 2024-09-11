@@ -11,9 +11,13 @@ const LOCAL_STORAGE_PINNED_DATE_KEY = 'pinnedDate';
 const DEFAULT_DATE_FORMAT = 'DD/MM/YYYY';
 const VERBOSE_DATE_FORMAT = 'dd MMM';
 
-const getFormattedDayVerbose = (day: Dayjs): string => {
+const getWeekdayString = (day: Dayjs): string => {
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  return `${weekDays[day.weekday()]} ${day.format(VERBOSE_DATE_FORMAT)}`;
+  return weekDays[day.weekday()];
+};
+
+const getFormattedDayVerbose = (day: Dayjs): string => {
+  return `${getWeekdayString(day)} ${day.format(VERBOSE_DATE_FORMAT)}`;
 };
 
 const getDurationStringFromMilliseconds = (milliseconds: number): string => {
@@ -44,6 +48,7 @@ export {
   getDurationStringFromMilliseconds,
   getFormattedDayVerbose,
   getLocalStoragePinnedDate,
+  getWeekdayString,
   setLocalStoragePinnedDate,
   VERBOSE_DATE_FORMAT,
 };

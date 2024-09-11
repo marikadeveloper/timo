@@ -1,17 +1,21 @@
 import dayjs from 'dayjs';
-import { VERBOSE_DATE_FORMAT } from '../../../utils';
+import { getWeekdayString, VERBOSE_DATE_FORMAT } from '../../../utils';
 import DatePicker from '../../date-picker';
+import './styles.scss';
 
 function DateNavigationPicker({
   date,
   dateChanged,
 }: DateNavigationPickerProps) {
   return (
-    <DatePicker
-      defaultDate={date}
-      dateChanged={dateChanged}
-      format={VERBOSE_DATE_FORMAT}
-    />
+    <div className='date-navigation-picker'>
+      <p>{getWeekdayString(date)}</p>
+      <DatePicker
+        defaultDate={date}
+        dateChanged={dateChanged}
+        format={VERBOSE_DATE_FORMAT}
+      />
+    </div>
   );
 }
 

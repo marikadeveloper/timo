@@ -1,7 +1,7 @@
-export const PROJECT_CODE_MIN_LENGTH = 3;
-export const PROJECT_CODE_MAX_LENGTH = 10;
-export const PROJECT_CODE_REGEX = /^[a-zA-Z0-9]{3,10}$/;
-export const PROJECTS_DEFAULT_COLORS = [
+const PROJECT_CODE_MIN_LENGTH = 3;
+const PROJECT_CODE_MAX_LENGTH = 10;
+const PROJECT_CODE_REGEX = /^[a-zA-Z0-9]{3,10}$/;
+const PROJECTS_DEFAULT_COLORS = [
   '#393b42',
   '#5e2647',
   '#462b63',
@@ -13,13 +13,21 @@ export const PROJECTS_DEFAULT_COLORS = [
   '#604419',
 ];
 
-export const isProjectCodeValid = (code: string): boolean => {
+const isProjectCodeValid = (code: string): boolean => {
   return PROJECT_CODE_REGEX.test(code);
 };
 
-export const generateProjectCode = (projectName: string): string => {
+const generateProjectCode = (projectName: string): string => {
   return projectName
     .replace(/[^a-zA-Z0-9]/g, '')
     .toUpperCase()
     .slice(0, PROJECT_CODE_MIN_LENGTH);
+};
+
+export {
+  PROJECTS_DEFAULT_COLORS,
+  PROJECT_CODE_MAX_LENGTH,
+  PROJECT_CODE_MIN_LENGTH,
+  generateProjectCode,
+  isProjectCodeValid,
 };

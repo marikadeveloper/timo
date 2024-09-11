@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import DateNavigation from '../../components/date-navigation';
-import DatePin from '../../components/date-pin';
 import { useLiveTasks } from '../../data/hooks/exportHooks';
 import { getLocalStoragePinnedDate } from '../../utils';
 import './styles.scss';
@@ -22,7 +21,7 @@ function Tasks() {
           dateChanged={setDate}
           defaultDate={date}
         />
-        <DatePin date={date} />
+        {/* TODO: decomment <DatePin date={date} /> */}
       </section>
 
       {/* TODO: add a mark to get to today's date */}
