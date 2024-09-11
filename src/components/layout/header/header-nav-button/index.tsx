@@ -1,4 +1,4 @@
-import { AppView } from '../../data/interfaces/View';
+import { AppView } from '../../../../data/interfaces/View';
 import './styles.scss';
 
 function HeaderNavButton({

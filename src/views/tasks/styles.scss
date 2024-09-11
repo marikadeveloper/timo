@@ -1,6 +1,13 @@
 .tasks {
-  &__navigation {
+  &__header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+
+    &__export {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
   }
 }

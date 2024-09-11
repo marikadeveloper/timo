@@ -4,11 +4,6 @@
   @include base-button;
   padding: 2px;
 
-  &:active {
-    position: relative;
-    top: 1px;
-  }
-
   &--whiteBg {
     background: #fff;
   }

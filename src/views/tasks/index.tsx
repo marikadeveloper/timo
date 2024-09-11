@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import DateNavigation from '../../components/date-navigation';
+import TasksExportButton from '../../components/tasks-export-button';
+import TasksTotalDuration from '../../components/tasks-total-duration';
 import { useLiveTasks } from '../../data/hooks/exportHooks';
 import { getLocalStoragePinnedDate } from '../../utils';
 import './styles.scss';
@@ -15,13 +17,18 @@ function Tasks() {
 
   return (
     <div className='tasks'>
-      <h2>Tasks</h2>
-      <section className='tasks__navigation'>
+      <section className='tasks__header'>
         <DateNavigation
           dateChanged={setDate}
           defaultDate={date}
         />
-        {/* TODO: decomment <DatePin date={date} /> */}
+        {Boolean(tasks?.length) && (
+          <div className='tasks__header__export'>
+            {/* TODO: decomment <DatePin date={date} /> */}
+            <TasksTotalDuration tasks={tasks} />
+            <TasksExportButton tasks={tasks} />
+          </div>
+        )}
       </section>
 
       {/* TODO: add a mark to get to today's date */}

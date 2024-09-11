@@ -2,6 +2,12 @@
   background: unset;
   border: 1px solid #000;
   border-radius: 6px;
+  border-bottom-width: 2px;
+  border-right-width: 2px;
   cursor: pointer;
   margin: 0;
+
+  &:active {
+    border-width: 1px;
+  }
 }
