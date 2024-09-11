@@ -1,5 +1,5 @@
-import Header from '../header';
-import SkipLink from '../skip-link';
+import Header from './header';
+import SkipLink from './skip-link';
 import './styles.scss';
 
 function Layout({ children }: { children: React.ReactNode }) {

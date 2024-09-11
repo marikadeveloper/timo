@@ -1,7 +1,7 @@
-import { useViewContext } from '../../context/view-context';
-import { DEFAULT_VIEW } from '../../utils/viewUtils';
-import HeaderNavButton from '../header-nav-button';
-import Icon from '../icon';
+import { useViewContext } from '../../../context/view-context';
+import { DEFAULT_VIEW } from '../../../utils/viewUtils';
+import Icon from '../../icon';
+import HeaderNavButton from './header-nav-button';
 import './styles.scss';
 
 function Header() {

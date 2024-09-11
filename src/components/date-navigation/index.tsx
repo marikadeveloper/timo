@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { getFormattedDayVerbose } from '../../utils';
 import IconButton from '../icon-button';
+import UnstyledButton from '../unstyled-button';
 import './styles.scss';
 
 function DateNavigation({ defaultDate, dateChanged }: DateNavigationProps) {
@@ -20,7 +21,9 @@ function DateNavigation({ defaultDate, dateChanged }: DateNavigationProps) {
         iconName='chevron-back'
         onClick={() => changeDate(date.subtract(1, 'day'))}
       />
-      <span>{getFormattedDayVerbose(date)}</span>
+      <UnstyledButton aria-label='Click to show a calendar'>
+        {getFormattedDayVerbose(date)}
+      </UnstyledButton>
       <IconButton
         ariaLabel='Next day'
         iconAriaLabel='A chevron pointing right'
