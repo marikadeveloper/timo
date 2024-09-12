@@ -1,10 +1,11 @@
+import React from 'react';
 import { useViewContext } from '../../../context/view-context';
 import { DEFAULT_VIEW } from '../../../utils/viewUtils';
 import Icon from '../../icon';
 import HeaderNavButton from './header-nav-button';
 import './styles.scss';
 
-function Header() {
+const Header: React.FC = () => {
   const { view, setView } = useViewContext();
   return (
     <header className='header'>
@@ -47,6 +48,6 @@ function Header() {
       </nav>
     </header>
   );
-}
+};
 
 export default Header;

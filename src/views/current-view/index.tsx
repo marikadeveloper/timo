@@ -1,7 +1,8 @@
+import React from 'react';
 import { useViewContext } from '../../context/view-context';
 import Tasks from '../tasks';
 
-function CurrentView() {
+const CurrentView: React.FC = () => {
   const { view } = useViewContext();
 
   if (view === 'tasks') {
@@ -13,6 +14,6 @@ function CurrentView() {
       <p>Unsupported view :( or more like 404...</p>
     </div>
   );
-}
+};
 
 export default CurrentView;

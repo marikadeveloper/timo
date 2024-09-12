@@ -1,6 +1,12 @@
+import React from 'react';
 import './styles.scss';
 
-function Button({ children, onClick }: ButtonProps) {
+type ButtonProps = {
+  children: React.ReactNode;
+  onClick: () => void;
+};
+
+const Button: React.FC<ButtonProps> = ({ children, onClick }) => {
   return (
     <button
       className='button'
@@ -8,11 +14,6 @@ function Button({ children, onClick }: ButtonProps) {
       {children}
     </button>
   );
-}
-
-type ButtonProps = {
-  children: React.ReactNode;
-  onClick: () => void;
 };
 
 export default Button;

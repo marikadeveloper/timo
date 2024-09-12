@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import db from '../db';
-import { Task } from '../interfaces/Task';
+import db from '../data/db';
+import { Task } from '../data/interfaces/Task';
 
 function useLiveTasks(date: dayjs.Dayjs) {
   const [tasks, setTasks] = useState<Task[]>([]);

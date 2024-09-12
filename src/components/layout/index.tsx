@@ -1,8 +1,13 @@
+import React from 'react';
 import Header from './header';
 import SkipLink from './skip-link';
 import './styles.scss';
 
-function Layout({ children }: { children: React.ReactNode }) {
+type LayoutProps = {
+  children: React.ReactNode;
+};
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className='layout'>
       <SkipLink />
@@ -14,6 +19,6 @@ function Layout({ children }: { children: React.ReactNode }) {
       </main>
     </div>
   );
-}
+};
 
 export default Layout;

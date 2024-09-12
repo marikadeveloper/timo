@@ -1,12 +1,18 @@
 import dayjs from 'dayjs';
+import React from 'react';
 import { getWeekdayString, VERBOSE_DATE_FORMAT } from '../../../utils';
 import DatePicker from '../../date-picker';
 import './styles.scss';
 
-function DateNavigationPicker({
+type DateNavigationPickerProps = {
+  date: dayjs.Dayjs;
+  dateChanged: (newDate: dayjs.Dayjs) => void;
+};
+
+const DateNavigationPicker: React.FC<DateNavigationPickerProps> = ({
   date,
   dateChanged,
-}: DateNavigationPickerProps) {
+}) => {
   return (
     <div className='date-navigation-picker'>
       <p>{getWeekdayString(date)}</p>
@@ -17,11 +23,6 @@ function DateNavigationPicker({
       />
     </div>
   );
-}
-
-type DateNavigationPickerProps = {
-  date: dayjs.Dayjs;
-  dateChanged: (newDate: dayjs.Dayjs) => void;
 };
 
 export default DateNavigationPicker;

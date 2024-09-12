@@ -1,10 +1,18 @@
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import IconButton from '../icon-button';
 import DateNavigationPicker from './date-navigation-picker';
 import './styles.scss';
 
-function DateNavigation({ defaultDate, dateChanged }: DateNavigationProps) {
+type DateNavigationProps = {
+  dateChanged: (newDate: dayjs.Dayjs) => void;
+  defaultDate: dayjs.Dayjs;
+};
+
+const DateNavigation: React.FC<DateNavigationProps> = ({
+  defaultDate,
+  dateChanged,
+}) => {
   const [date, setDate] = useState(defaultDate);
 
   const changeDate = (newDate: dayjs.Dayjs) => {
@@ -30,14 +38,8 @@ function DateNavigation({ defaultDate, dateChanged }: DateNavigationProps) {
         iconName='chevron-forward'
         onClick={() => changeDate(date.add(1, 'day'))}
       />
-      {/* TODO: add datepicker? */}
     </nav>
   );
-}
-
-type DateNavigationProps = {
-  dateChanged: (newDate: dayjs.Dayjs) => void;
-  defaultDate: dayjs.Dayjs;
 };
 
 export default DateNavigation;

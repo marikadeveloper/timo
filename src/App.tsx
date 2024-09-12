@@ -1,4 +1,3 @@
-import './App.scss';
 import Layout from './components/layout/index.tsx';
 import './data/db.ts';
 import db from './data/db.ts';

@@ -1,0 +1,24 @@
+.select-button:not([aria-expanded='true']) + .select-dropdown {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li[aria-selected='true'] {
+  background: #ddd;
+}
+
+li.chosen {
+  font-weight: bold;
+}
+
+label {
+  width: 100%;
+  display: block;
+}

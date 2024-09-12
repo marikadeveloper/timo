@@ -1,12 +1,16 @@
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   getLocalStoragePinnedDate,
   setLocalStoragePinnedDate,
 } from '../../utils';
 import IconButton from '../icon-button';
 
-function DatePin({ date }: DatePinProps) {
+type DatePinProps = {
+  date: dayjs.Dayjs;
+};
+
+const DatePin: React.FC<DatePinProps> = ({ date }: DatePinProps) => {
   const [pinnedDate, setPinnedDate] = useState<dayjs.Dayjs | null>(() =>
     getLocalStoragePinnedDate(),
   );
@@ -32,10 +36,6 @@ function DatePin({ date }: DatePinProps) {
       onClick={() => changePinnedDate(date)}
     />
   );
-}
-
-type DatePinProps = {
-  date: dayjs.Dayjs;
 };
 
 export default DatePin;

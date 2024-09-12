@@ -1,8 +1,12 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Task } from '../../data/interfaces/Task';
 import { getTasksDurationString } from '../../utils';
 
-function TasksTotalDuration({ tasks }: TasksTotalDurationProps) {
+type TasksTotalDurationProps = {
+  tasks: Task[];
+};
+
+const TasksTotalDuration: React.FC<TasksTotalDurationProps> = ({ tasks }) => {
   const totalDuration = useMemo(() => getTasksDurationString(tasks), [tasks]);
 
   return (
@@ -10,10 +14,6 @@ function TasksTotalDuration({ tasks }: TasksTotalDurationProps) {
       <p>TOT: {totalDuration}</p>
     </div>
   );
-}
-
-type TasksTotalDurationProps = {
-  tasks: Task[];
 };
 
 export default TasksTotalDuration;

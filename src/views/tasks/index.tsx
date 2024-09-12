@@ -1,15 +1,17 @@
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import DateNavigation from '../../components/date-navigation';
+import Task from '../../components/task';
+import TaskCreate from '../../components/task-create';
 import TasksExportButton from '../../components/tasks-export-button';
 import TasksTotalDuration from '../../components/tasks-total-duration';
-import { useLiveTasks } from '../../data/hooks/exportHooks';
+import { useLiveTasks } from '../../hooks/useLiveTasks';
 import { getLocalStoragePinnedDate } from '../../utils';
 import './styles.scss';
 
 const today = dayjs();
 
-function Tasks() {
+const Tasks: React.FC = () => {
   const [date, setDate] = useState<dayjs.Dayjs>(
     () => getLocalStoragePinnedDate() || today,
   );
@@ -31,8 +33,19 @@ function Tasks() {
           </div>
         )}
       </section>
+      <section className='tasks__list'>
+        {tasks?.map((task) => (
+          <Task
+            key={task.id}
+            task={task}
+          />
+        ))}
+      </section>
+      <section className='tasks__footer'>
+        <TaskCreate />
+      </section>
     </div>
   );
-}
+};
 
 export default Tasks;

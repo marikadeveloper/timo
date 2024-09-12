@@ -1,6 +1,6 @@
 import './styles.scss';
 
-function SkipLink() {
+const SkipLink: React.FC = () => {
   return (
     <a
       id='skip-link'
@@ -8,6 +8,6 @@ function SkipLink() {
       Skip to main content
     </a>
   );
-}
+};
 
 export default SkipLink;

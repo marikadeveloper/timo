@@ -1,12 +1,20 @@
+import React from 'react';
 import { AppView } from '../../../../data/interfaces/View';
 import './styles.scss';
 
-function HeaderNavButton({
+type HeaderNavButtonProps = {
+  active: boolean;
+  onClick: (view: AppView) => void;
+  text: string;
+  view: AppView;
+};
+
+const HeaderNavButton: React.FC<HeaderNavButtonProps> = ({
   active,
   onClick,
   text,
   view,
-}: HeaderNavButtonProps) {
+}) => {
   return (
     <button
       className={`header-nav-button ${active ? 'active' : ''}`}
@@ -14,13 +22,6 @@ function HeaderNavButton({
       {text}
     </button>
   );
-}
-
-type HeaderNavButtonProps = {
-  active: boolean;
-  onClick: (view: AppView) => void;
-  text: string;
-  view: AppView;
 };
 
 export default HeaderNavButton;

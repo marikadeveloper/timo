@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
 import ReactDatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css';
@@ -12,13 +12,20 @@ type DatePickerValue =
   | DatePickerValuePiece
   | [DatePickerValuePiece, DatePickerValuePiece];
 
+type DatePickerProps = {
+  dateChanged: (newDate: dayjs.Dayjs) => void;
+  defaultDate: dayjs.Dayjs;
+  format?: string;
+  selectRange?: boolean;
+};
+
 const today = new Date();
 
-function DatePicker({
+const DatePicker: React.FC<DatePickerProps> = ({
   dateChanged,
   defaultDate,
   format = DEFAULT_DATE_FORMAT,
-}: DatePickerProps) {
+}) => {
   const [date, setDate] = useState<Date>(defaultDate.toDate() || today);
 
   useEffect(() => {
@@ -42,13 +49,6 @@ function DatePicker({
       value={date}
     />
   );
-}
-
-type DatePickerProps = {
-  dateChanged: (newDate: dayjs.Dayjs) => void;
-  defaultDate: dayjs.Dayjs;
-  format?: string;
-  selectRange?: boolean;
 };
 
 export default DatePicker;

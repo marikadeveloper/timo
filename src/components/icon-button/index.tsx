@@ -1,13 +1,22 @@
+import React from 'react';
 import Icon from '../icon';
 import './styles.scss';
 
-function IconButton({
+type IconButtonProps = {
+  ariaLabel: string;
+  iconAriaLabel: string;
+  iconName: string;
+  onClick: () => void;
+  variant?: 'blackBg' | 'whiteBg';
+};
+
+const IconButton: React.FC<IconButtonProps> = ({
   ariaLabel,
   iconAriaLabel,
   iconName,
   onClick,
   variant = 'whiteBg',
-}: IconButtonProps) {
+}) => {
   return (
     <button
       aria-label={ariaLabel}
@@ -19,14 +28,6 @@ function IconButton({
       />
     </button>
   );
-}
-
-type IconButtonProps = {
-  ariaLabel: string;
-  iconAriaLabel: string;
-  iconName: string;
-  onClick: () => void;
-  variant?: 'blackBg' | 'whiteBg';
 };
 
 export default IconButton;

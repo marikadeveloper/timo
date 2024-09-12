@@ -1,6 +1,12 @@
+import React from 'react';
 import './styles.scss';
 
-function UnstyledButton({ children, ...props }: UnstyledButtonProps) {
+type UnstyledButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+
+const UnstyledButton: React.FC<UnstyledButtonProps> = ({
+  children,
+  ...props
+}) => {
   return (
     <button
       className='unstyled-button'
@@ -8,8 +14,6 @@ function UnstyledButton({ children, ...props }: UnstyledButtonProps) {
       {children}
     </button>
   );
-}
-
-type UnstyledButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+};
 
 export default UnstyledButton;

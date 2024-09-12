@@ -1,7 +1,13 @@
+import React from 'react';
 import { ReactSVG } from 'react-svg';
 import './styles.scss';
 
-function Icon({ ariaLabel, name }: IconProps) {
+type IconProps = {
+  ariaLabel: string;
+  name: string;
+};
+
+const Icon: React.FC<IconProps> = ({ ariaLabel, name }) => {
   return (
     <ReactSVG
       className='icon'
@@ -9,11 +15,6 @@ function Icon({ ariaLabel, name }: IconProps) {
       src={`src/assets/images/${name}.svg`}
     />
   );
-}
-
-type IconProps = {
-  ariaLabel: string;
-  name: string;
 };
 
 export default Icon;
