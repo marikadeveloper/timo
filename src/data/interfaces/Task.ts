@@ -10,12 +10,12 @@ interface Task {
   timers: Timer[];
 }
 interface TaskCreateInput {
-  code: string;
-  createdAt: Date;
+  code?: string;
+  createdAt?: Date;
   description: string;
   parentId?: number;
   projectId?: number;
-  timers: Timer[];
+  timers?: Timer[];
 }
 interface TaskUpdateInput {
   id: number;

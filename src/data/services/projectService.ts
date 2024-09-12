@@ -1,11 +1,11 @@
-import db from '../db';
-import { ProjectCreateInput, ProjectUpdateInput } from '../interfaces/Project';
 import {
   generateProjectCode,
   isProjectCodeValid,
   PROJECT_CODE_MAX_LENGTH,
   PROJECT_CODE_MIN_LENGTH,
-} from '../utils';
+} from '../../utils';
+import db from '../db';
+import { ProjectCreateInput, ProjectUpdateInput } from '../interfaces/Project';
 
 const getAllProjects = async () => {
   return db.projects.toArray();

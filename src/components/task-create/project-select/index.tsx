@@ -1,0 +1,39 @@
+import React, { useEffect, useState } from 'react';
+import { Project } from '../../../data/interfaces/Project';
+import { getAllProjects } from '../../../data/services/projectService';
+import Select, { SelectOption } from '../../select';
+
+type ProjectSelectProps = {
+  value?: number;
+  onChange: (value: string) => void;
+};
+
+const ProjectSelect: React.FC<ProjectSelectProps> = ({ onChange, value }) => {
+  const [projects, setProjects] = useState<SelectOption[]>([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const projects = await getAllProjects();
+      setProjects(
+        projects?.map((p: Project) => ({
+          value: p.id.toString(),
+          label: p.name,
+        })) || [],
+      );
+    };
+    fetchProjects();
+  }, []);
+
+  return (
+    <Select
+      hasManualTextInput
+      label=''
+      placeholder='Select a project'
+      onChange={onChange}
+      options={projects}
+      value={value?.toString() || ''}
+    />
+  );
+};
+
+export default ProjectSelect;

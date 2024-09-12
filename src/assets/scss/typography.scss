@@ -4,6 +4,11 @@
   src: url('src/assets/fonts/Nunito-VariableFont_wght.ttf') format('truetype');
 }
 
+body {
+  font-family: var(--font-family);
+  font-weight: 400;
+}
+
 h1,
 h2,
 h3,
@@ -21,6 +26,7 @@ p {
   margin: 0;
 }
 
-button {
-  font-family: 'Nunito', sans-serif;
+button,
+input {
+  font-family: var(--font-family);
 }

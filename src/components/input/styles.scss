@@ -1,0 +1,7 @@
+@import '../../assets/scss/mixins.scss';
+
+.input {
+  @include timo-border;
+  border-width: 1px;
+  height: var(--input-height);
+}

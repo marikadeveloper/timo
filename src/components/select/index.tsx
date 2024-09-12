@@ -1,5 +1,6 @@
 import React from 'react';
 import useAccessibleDropdown from '../../hooks/useAccessibleDropdown';
+import Input from '../input';
 import './styles.scss';
 
 type SelectOption = {
@@ -8,19 +9,25 @@ type SelectOption = {
 };
 
 type SelectProps = {
-  options: SelectOption[];
-  value: string;
+  ariaLabel?: string;
+  hasManualTextInput?: boolean;
+  label: string;
   namespace?: string;
   onChange: (value: string) => void;
-  label: string;
+  options: SelectOption[];
+  placeholder?: string;
+  value: string;
 };
 
 const Select: React.FC<SelectProps> = ({
-  options,
-  value,
+  ariaLabel = 'Select an option',
+  hasManualTextInput = false,
+  label,
   namespace = 'default_select_namespace',
   onChange,
-  label,
+  options,
+  placeholder = 'Select an option',
+  value,
 }) => {
   const {
     isDropdownOpen,
@@ -34,6 +41,59 @@ const Select: React.FC<SelectProps> = ({
 
   const chosen = options.find((o) => o.value === value);
 
+  const renderManualTextInput = () => {
+    // a text input can be used to filter the options or to add a new one
+    return (
+      <li>
+        <label>
+          <Input
+            type='text'
+            placeholder='Type to filter or add a new option'
+            aria-label='Type to filter or add a new option'
+          />
+        </label>
+      </li>
+    );
+  };
+
+  const renderOptions = () => {
+    return options.map(({ value: optionValue }, index) => (
+      <li
+        key={optionValue}
+        id={`${namespace}_element_${optionValue}`}
+        aria-selected={index === activeIndex}
+        role='option'
+        onMouseOver={() => setActiveIndex(index)}>
+        <label>
+          <input
+            type='radio'
+            name={`${namespace}_radio`}
+            value={optionValue}
+            className={chosen?.value === optionValue ? 'checked' : ''}
+            checked={chosen?.value === optionValue}
+            onChange={() => select(optionValue)}
+          />
+          <span>{label}</span>
+        </label>
+      </li>
+    ));
+  };
+
+  const renderEmptyState = () => {
+    return (
+      <li>
+        <label>
+          <input
+            type='radio'
+            name={`${namespace}_radio`}
+            disabled
+          />
+          <span>No options available</span>
+        </label>
+      </li>
+    );
+  };
+
   return (
     <>
       <label
@@ -45,46 +105,28 @@ const Select: React.FC<SelectProps> = ({
         className='select-container'
         data-namespace={`${namespace}-dropdown-root`}>
         <button
-          className='select-button'
+          className='select-container__button'
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           role='combobox'
           aria-autocomplete='none'
-          aria-label='Choose your favourite Ninjago character'
+          aria-label={ariaLabel}
           aria-haspopup='listbox'
           aria-controls={`${namespace}_dropdown`}
           aria-expanded={isDropdownOpen}
           aria-activedescendant={`${namespace}_element_${value}`}>
-          {chosen ? `Selected: ${chosen.label}` : 'Select an option'}
+          {chosen ? `Selected: ${chosen.label}` : placeholder}
           <span className='chevron'>▾</span>
         </button>
         <ul
-          className='select-dropdown'
+          className='select-container__dropdown'
           ref={listRef}
           role='listbox'
           id={`${namespace}_dropdown`}
           tabIndex={-1}>
-          {options.map(({ label, value: optionValue }, index) => (
-            <li
-              key={optionValue}
-              id={`${namespace}_element_${optionValue}`}
-              aria-selected={index === activeIndex}
-              role='option'
-              onMouseOver={() => setActiveIndex(index)}>
-              <label>
-                <input
-                  type='radio'
-                  name={`${namespace}_radio`}
-                  value={optionValue}
-                  className={chosen?.value === optionValue ? 'checked' : ''}
-                  checked={chosen?.value === optionValue}
-                  onChange={() => select(optionValue)}
-                />
-                <span>{label}</span>
-              </label>
-            </li>
-          ))}
+          {hasManualTextInput && renderManualTextInput()}
+          {options.length ? renderOptions() : renderEmptyState()}
         </ul>
       </div>
     </>

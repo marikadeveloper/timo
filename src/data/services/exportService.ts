@@ -1,4 +1,3 @@
-import { ExportTasksFilter } from '../interfaces/Export';
 import {
   attachProjectAndParentToTasks,
   downloadTasksCsv,
@@ -8,7 +7,8 @@ import {
   getTasksDurationString,
   initializeCsvHeader,
   validateExportInput,
-} from '../utils';
+} from '../../utils';
+import { ExportTasksFilter } from '../interfaces/Export';
 
 /*
 const exportTasks = async ({
