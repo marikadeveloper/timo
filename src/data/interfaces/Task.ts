@@ -3,7 +3,7 @@ import Timer from './Timer';
 interface Task {
   id: number;
   code: string;
-  createdAt: Date;
+  createdAt: string; // Date
   description: string;
   parentId?: number;
   projectId?: number;

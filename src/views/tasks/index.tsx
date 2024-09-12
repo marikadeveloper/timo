@@ -25,14 +25,12 @@ function Tasks() {
         {Boolean(tasks?.length) && (
           <div className='tasks__header__export'>
             {/* TODO: decomment <DatePin date={date} /> */}
+            {/* TODO: add a mark to get to today's date */}
             <TasksTotalDuration tasks={tasks} />
             <TasksExportButton tasks={tasks} />
           </div>
         )}
       </section>
-
-      {/* TODO: add a mark to get to today's date */}
-      {/* TODO: add export btton */}
     </div>
   );
 }
