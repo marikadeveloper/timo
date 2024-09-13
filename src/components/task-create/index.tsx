@@ -18,9 +18,17 @@ const TaskCreate: React.FC = () => {
     }));
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(taskCreateInput);
+  };
+
   return (
-    <div className='task-create'>
+    <form
+      className='task-create'
+      onSubmit={handleSubmit}>
       <Input
+        className='task-create__input'
         type='text'
         placeholder='What are you working on?'
         value={taskCreateInput.description}
@@ -31,14 +39,9 @@ const TaskCreate: React.FC = () => {
           value={taskCreateInput.projectId}
           onChange={(newValue) => onFieldChange('projectId', newValue)}
         />
-        <Button
-          onClick={function (): void {
-            throw new Error('Function not implemented.');
-          }}>
-          Start
-        </Button>
+        <Button type='submit'>Start</Button>
       </div>
-    </div>
+    </form>
   );
 };
 

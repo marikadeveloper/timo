@@ -1,6 +1,9 @@
 import dayjs from 'dayjs';
 import React from 'react';
-import { getWeekdayString, VERBOSE_DATE_FORMAT } from '../../../utils';
+import {
+  getWeekdayString,
+  VERBOSE_DATE_FORMAT,
+} from '../../../utils/dateUtils';
 import DatePicker from '../../date-picker';
 import './styles.scss';
 

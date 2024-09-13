@@ -1,0 +1,3 @@
+const INPUT_DEBOUNCE_TIME_MS = 300;
+
+export { INPUT_DEBOUNCE_TIME_MS };

@@ -3,7 +3,8 @@ import {
   isProjectCodeValid,
   PROJECT_CODE_MAX_LENGTH,
   PROJECT_CODE_MIN_LENGTH,
-} from '../../utils';
+  PROJECTS_DEFAULT_COLORS,
+} from '../../utils/projectUtils';
 import db from '../db';
 import { ProjectCreateInput, ProjectUpdateInput } from '../interfaces/Project';
 
@@ -23,6 +24,13 @@ const createProject = async ({ code, name, color }: ProjectCreateInput) => {
   }
   if (!name?.trim()) {
     throw new Error('Name is required');
+  }
+  if (!color?.trim()) {
+    // assign a random color
+    color =
+      PROJECTS_DEFAULT_COLORS[
+        Math.floor(Math.random() * PROJECTS_DEFAULT_COLORS.length)
+      ];
   }
   return db.projects.add({
     code: code || generateProjectCode(name),

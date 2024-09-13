@@ -1,6 +1,5 @@
 import React from 'react';
 import useAccessibleDropdown from '../../hooks/useAccessibleDropdown';
-import Input from '../input';
 import './styles.scss';
 
 type SelectOption = {
@@ -10,8 +9,6 @@ type SelectOption = {
 
 type SelectProps = {
   ariaLabel?: string;
-  hasManualTextInput?: boolean;
-  label: string;
   namespace?: string;
   onChange: (value: string) => void;
   options: SelectOption[];
@@ -21,8 +18,6 @@ type SelectProps = {
 
 const Select: React.FC<SelectProps> = ({
   ariaLabel = 'Select an option',
-  hasManualTextInput = false,
-  label,
   namespace = 'default_select_namespace',
   onChange,
   options,
@@ -30,34 +25,19 @@ const Select: React.FC<SelectProps> = ({
   value,
 }) => {
   const {
-    isDropdownOpen,
-    setIsDropdownOpen,
     activeIndex,
-    setActiveIndex,
-    select,
-    setIsFocus,
+    isDropdownOpen,
     listRef,
-  } = useAccessibleDropdown({ options, value, onChange, namespace });
+    select,
+    setActiveIndex,
+    setIsDropdownOpen,
+    setIsFocus,
+  } = useAccessibleDropdown({ namespace, onChange, options, value });
 
   const chosen = options.find((o) => o.value === value);
 
-  const renderManualTextInput = () => {
-    // a text input can be used to filter the options or to add a new one
-    return (
-      <li>
-        <label>
-          <Input
-            type='text'
-            placeholder='Type to filter or add a new option'
-            aria-label='Type to filter or add a new option'
-          />
-        </label>
-      </li>
-    );
-  };
-
   const renderOptions = () => {
-    return options.map(({ value: optionValue }, index) => (
+    return options.map(({ value: optionValue, label }, index) => (
       <li
         key={optionValue}
         id={`${namespace}_element_${optionValue}`}
@@ -96,15 +76,11 @@ const Select: React.FC<SelectProps> = ({
 
   return (
     <>
-      <label
-        className='select-label'
-        id={`${namespace}_label`}>
-        {label}
-      </label>
       <div
         className='select-container'
         data-namespace={`${namespace}-dropdown-root`}>
         <button
+          type='button'
           className='select-container__button'
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           onFocus={() => setIsFocus(true)}
@@ -125,7 +101,6 @@ const Select: React.FC<SelectProps> = ({
           role='listbox'
           id={`${namespace}_dropdown`}
           tabIndex={-1}>
-          {hasManualTextInput && renderManualTextInput()}
           {options.length ? renderOptions() : renderEmptyState()}
         </ul>
       </div>

@@ -6,7 +6,7 @@ import TaskCreate from '../../components/task-create';
 import TasksExportButton from '../../components/tasks-export-button';
 import TasksTotalDuration from '../../components/tasks-total-duration';
 import { useLiveTasks } from '../../hooks/useLiveTasks';
-import { getLocalStoragePinnedDate } from '../../utils';
+import { getLocalStoragePinnedDate } from '../../utils/dateUtils';
 import './styles.scss';
 
 const today = dayjs();

@@ -4,10 +4,10 @@ import {
   fetchTasksToExport,
   formatTasksToCsv,
   getExportTitle,
-  getTasksDurationString,
   initializeCsvHeader,
   validateExportInput,
-} from '../../utils';
+} from '../../utils/exportUtils';
+import { getTasksDurationString } from '../../utils/taskUtils';
 import { ExportTasksFilter } from '../interfaces/Export';
 
 /*

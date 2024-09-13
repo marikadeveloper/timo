@@ -26,11 +26,9 @@ const ProjectSelect: React.FC<ProjectSelectProps> = ({ onChange, value }) => {
 
   return (
     <Select
-      hasManualTextInput
-      label=''
-      placeholder='Select a project'
       onChange={onChange}
       options={projects}
+      placeholder='Select a project'
       value={value?.toString() || ''}
     />
   );

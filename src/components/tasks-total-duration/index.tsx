@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Task } from '../../data/interfaces/Task';
-import { getTasksDurationString } from '../../utils';
+import { getTasksDurationString } from '../../utils/taskUtils';
 
 type TasksTotalDurationProps = {
   tasks: Task[];
