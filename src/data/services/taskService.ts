@@ -1,20 +1,21 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import db from '../db';
 import { TaskCreateInput, TaskUpdateInput } from '../interfaces/Task';
+import { startTimer } from './timerService';
 
 const getAllTasks = async () => {
   return db.tasks.toArray();
 };
 
-const getTasksByDate = async ({ date }: { date: Date }) => {
+const getTasksByDate = async (date: Date) => {
   return useLiveQuery(() => db.tasks.where('createdAt').equals(date).toArray());
 };
 
-const getTasksByProject = async ({ projectId }: { projectId: number }) => {
+const getTasksByProject = async (projectId: number) => {
   return db.tasks.where('projectId').equals(projectId).toArray();
 };
 
-const getTaskById = async ({ taskId }: { taskId: number }) => {
+const getTaskById = async (taskId: number) => {
   return db.tasks.get(taskId);
 };
 
@@ -29,13 +30,16 @@ const createTask = async ({ description, projectId }: TaskCreateInput) => {
       projectId,
       code: '', // Temporary code
       createdAt: new Date(),
-      timers: [{ start: new Date(), end: undefined }],
     });
 
     if (!taskId) {
       throw new Error('Failed to create task');
     }
 
+    // create timer
+    await startTimer({ taskId });
+
+    // create task code
     let taskCode = taskId.toString();
     if (projectId) {
       const project = await db.projects.get(projectId);
@@ -43,7 +47,6 @@ const createTask = async ({ description, projectId }: TaskCreateInput) => {
         taskCode = `${project.code}-${taskId}`;
       }
     }
-
     await db.tasks.update(taskId, { code: taskCode });
 
     return taskId;
@@ -60,7 +63,7 @@ const updateTask = async ({ id, description, projectId }: TaskUpdateInput) => {
   return db.tasks.update(id, { description, projectId });
 };
 
-const deleteTask = async ({ id }: { id: number }) => {
+const deleteTask = async (id: number) => {
   return db.tasks.delete(id);
 };
 

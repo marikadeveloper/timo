@@ -1,15 +1,17 @@
 import db from '../db';
+import { TimerCreateInput } from '../interfaces/Timer';
 
 const startTimer = async ({ taskId }: { taskId: number }) => {
   const task = await db.tasks.get(taskId);
   if (!task) {
     throw new Error('Task not found');
   }
-  if (task.timers[task.timers.length - 1].end === undefined) {
-    throw new Error('Timer already started');
-  }
-  task.timers.push({ start: new Date(), end: undefined });
-  return db.tasks.update(taskId, { timers: task.timers });
+  const newTimer: TimerCreateInput = {
+    start: new Date(),
+    taskId,
+  };
+
+  return db.timers.add(newTimer);
 };
 
 const endTimer = async ({ taskId }: { taskId: number }) => {
@@ -17,11 +19,19 @@ const endTimer = async ({ taskId }: { taskId: number }) => {
   if (!task) {
     throw new Error('Task not found');
   }
-  if (task.timers[task.timers.length - 1].end !== undefined) {
-    throw new Error('Timer already ended');
+  const timer = await db.timers.where('taskId').equals(taskId).last();
+
+  if (!timer) {
+    throw new Error('Timer not found');
   }
-  task.timers[task.timers.length - 1].end = new Date();
-  return db.tasks.update(taskId, { timers: task.timers });
+
+  return db.timers.update(timer.id, {
+    end: new Date(),
+  });
 };
 
-export { endTimer, startTimer };
+const getTimersByTaskId = async (taskId: number) => {
+  return db.timers.where('taskId').equals(taskId).toArray();
+};
+
+export { endTimer, getTimersByTaskId, startTimer };

@@ -3,6 +3,10 @@ import db from '../data/db';
 import { ExportType } from '../data/interfaces/Export';
 import { Project } from '../data/interfaces/Project';
 import { Task } from '../data/interfaces/Task';
+import { Timer } from '../data/interfaces/Timer';
+import { getProjectById } from '../data/services/projectService';
+import { getTaskById } from '../data/services/taskService';
+import { getTimersByTaskId } from '../data/services/timerService';
 import { getTaskDurationString } from './taskUtils';
 
 const getExportTitle = (
@@ -80,23 +84,25 @@ const fetchTasksToExport = async (
     .toArray();
 };
 
-const attachProjectAndParentToTasks = async (
-  tasks: (Task & { project?: Project; parent?: Task })[],
+const attachInfoToTasks = async (
+  tasks: (Task & { project?: Project; parent?: Task; timers?: Timer[] })[],
 ): Promise<void> => {
   await Promise.all(
     tasks.map(async (task) => {
-      const [project, parent] = await Promise.all([
-        task.projectId ? db.projects.get(task.projectId) : undefined,
-        task.parentId ? db.tasks.get(task.parentId) : undefined,
+      const [project, parent, timers] = await Promise.all([
+        task.projectId ? getProjectById(task.projectId) : undefined,
+        task.parentId ? getTaskById(task.parentId) : undefined,
+        getTimersByTaskId(task.id),
       ]);
-      task.project = project;
       task.parent = parent;
+      task.project = project;
+      task.timers = timers;
     }),
   );
 };
 
 const formatTasksToCsv = (
-  tasks: (Task & { project?: Project })[],
+  tasks: (Task & { parent?: Task; project?: Project; timers: Timer[] })[],
   exportType: ExportType,
 ): string => {
   const isNewDay = (prevTask: Task, currentTask: Task): boolean => {
@@ -151,7 +157,7 @@ const downloadTasksCsv = (
 };
 
 export {
-  attachProjectAndParentToTasks,
+  attachInfoToTasks,
   downloadTasksCsv,
   fetchTasksToExport,
   formatTasksToCsv,

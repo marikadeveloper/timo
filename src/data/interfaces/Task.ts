@@ -1,5 +1,3 @@
-import Timer from './Timer';
-
 interface Task {
   id: number;
   code: string;
@@ -7,7 +5,6 @@ interface Task {
   description: string;
   parentId?: number;
   projectId?: number;
-  timers: Timer[];
 }
 interface TaskCreateInput {
   code?: string;
@@ -15,7 +12,6 @@ interface TaskCreateInput {
   description: string;
   parentId?: number;
   projectId?: number;
-  timers?: Timer[];
 }
 interface TaskUpdateInput {
   id: number;
