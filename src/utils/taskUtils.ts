@@ -1,6 +1,10 @@
 import dayjs from 'dayjs';
 import { Task } from '../data/interfaces/Task';
-import Timer from '../data/interfaces/Timer';
+import { Timer } from '../data/interfaces/Timer';
+import {
+  getLatestTimerByTaskId,
+  getTimersByTaskId,
+} from '../data/services/timerService';
 import { getDurationStringFromMilliseconds } from './dateUtils';
 
 const getTimerDurationMilliseconds = (timer: Timer): number => {
@@ -51,11 +55,16 @@ const getTaskDurationString = (timers: Timer[]): string => {
     : '-';
 };
 
-const getTasksDurationString = (tasks: Task[]): string => {
-  const totalDuration = tasks.reduce(
-    (acc, task) => acc + getTaskTotalDurationMilliseconds(task.timers),
-    0,
-  );
+const getTasksDurationString = async (tasks: Task[]): Promise<string> => {
+  const totalDuration = (
+    await Promise.all(
+      tasks.map(async (task) => {
+        const timers = await getTimersByTaskId(task.id);
+        return getTaskTotalDurationMilliseconds(timers);
+      }),
+    )
+  ).reduce((acc, duration) => acc + duration, 0);
+
   return getDurationStringFromMilliseconds(totalDuration);
 };
 
@@ -66,8 +75,10 @@ const isCurrentDaysActivity = (
   return timers.some((timer) => dayjs(timer.start).isSame(currentDay, 'day'));
 };
 
-const hasTaskEnded = (task: Task): boolean => {
-  return task.timers.every((timer) => timer.end);
+const hasTaskEnded = async (taskId: number): Promise<boolean> => {
+  const lastTaskTimer = await getLatestTimerByTaskId(taskId);
+
+  return !!lastTaskTimer?.end;
 };
 
 export {

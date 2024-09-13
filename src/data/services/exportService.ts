@@ -1,5 +1,4 @@
 import {
-  attachProjectAndParentToTasks,
   downloadTasksCsv,
   fetchTasksToExport,
   formatTasksToCsv,
@@ -127,10 +126,9 @@ const exportTasks = async ({
     throw new Error('No activities found');
   }
 
-  await attachProjectAndParentToTasks(tasksToExport);
   csv += formatTasksToCsv(tasksToExport, exportType);
 
-  const totalDuration = getTasksDurationString(tasksToExport);
+  const totalDuration = await getTasksDurationString(tasksToExport);
   csv += `,,,TOT: ${totalDuration}\n`;
 
   downloadTasksCsv(csv, exportType, rangeStart, rangeEnd);

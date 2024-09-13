@@ -34,4 +34,8 @@ const getTimersByTaskId = async (taskId: number) => {
   return db.timers.where('taskId').equals(taskId).toArray();
 };
 
-export { endTimer, getTimersByTaskId, startTimer };
+const getLatestTimerByTaskId = async (taskId: number) => {
+  return db.timers.where('taskId').equals(taskId).last();
+};
+
+export { endTimer, getLatestTimerByTaskId, getTimersByTaskId, startTimer };

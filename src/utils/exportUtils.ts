@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import db from '../data/db';
-import { ExportType } from '../data/interfaces/Export';
+import { ExportTask, ExportType } from '../data/interfaces/Export';
 import { Project } from '../data/interfaces/Project';
 import { Task } from '../data/interfaces/Task';
 import { Timer } from '../data/interfaces/Timer';
@@ -73,15 +73,18 @@ const fetchTasksToExport = async (
   exportType: ExportType,
   rangeStart?: Date,
   rangeEnd?: Date,
-): Promise<Task[]> => {
+): Promise<ExportTask[]> => {
   const exportUnitOfTime = exportType === 'range' ? 'day' : exportType;
-  return await db.tasks
+  const tasks = await db.tasks
     .where('createdAt')
     .between(
       dayjs(rangeStart).startOf(exportUnitOfTime).toDate(),
       dayjs(rangeEnd).endOf(exportUnitOfTime).toDate(),
     )
     .toArray();
+
+  await attachInfoToTasks(tasks);
+  return tasks;
 };
 
 const attachInfoToTasks = async (
@@ -102,7 +105,7 @@ const attachInfoToTasks = async (
 };
 
 const formatTasksToCsv = (
-  tasks: (Task & { parent?: Task; project?: Project; timers: Timer[] })[],
+  tasks: ExportTask[],
   exportType: ExportType,
 ): string => {
   const isNewDay = (prevTask: Task, currentTask: Task): boolean => {
@@ -118,6 +121,8 @@ const formatTasksToCsv = (
 
   return tasks
     .map((task, i) => {
+      if (!task.timers) return '';
+
       const timers = task.timers
         .map(
           (timer) =>
