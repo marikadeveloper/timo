@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { ViewProvider } from './view-context';
+import { ViewProvider } from './viewContext';
 
 /* TODO: add ThemeContext */
 

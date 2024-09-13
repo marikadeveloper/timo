@@ -2,28 +2,27 @@ import React, { createContext, useContext, useMemo, useState } from 'react';
 import { AppView, ViewContextType } from '../data/interfaces/View';
 
 // Define the default view context
-const defaultViewContext: ViewContextType = {
+const defaultValue: ViewContextType = {
   view: 'tasks',
   setView: () => {},
 };
 
 // Create the view context
-const ViewContext = createContext<ViewContextType>(defaultViewContext);
+const ViewContext = createContext<ViewContextType>(defaultValue);
+
+type ViewProviderProps = {
+  children: React.ReactNode;
+};
 
 // Create the view provider component
-function ViewProvider({ children }: { children: React.ReactNode }) {
+const ViewProvider: React.FC<ViewProviderProps> = ({ children }) => {
   const [view, setView] = useState<AppView>('tasks'); // Set the initial view state
-
-  // Define the function to update the view state
-  const updateView = (newView: AppView) => {
-    setView(newView);
-  };
 
   // Memoize the view context value
   const viewContextValue = useMemo(
     () => ({
       view,
-      setView: updateView,
+      setView,
     }),
     [view],
   );
@@ -34,7 +33,7 @@ function ViewProvider({ children }: { children: React.ReactNode }) {
       {children}
     </ViewContext.Provider>
   );
-}
+};
 
 function useViewContext() {
   const context = useContext(ViewContext);

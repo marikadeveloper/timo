@@ -1,4 +1,4 @@
-import { useLiveQuery } from 'dexie-react-hooks';
+import dayjs from 'dayjs';
 import db from '../db';
 import { TaskCreateInput, TaskUpdateInput } from '../interfaces/Task';
 import { startTimer } from './timerService';
@@ -7,8 +7,11 @@ const getAllTasks = async () => {
   return db.tasks.toArray();
 };
 
-const getTasksByDate = async (date: Date) => {
-  return useLiveQuery(() => db.tasks.where('createdAt').equals(date).toArray());
+const getTasksByDate = async (date: dayjs.Dayjs) => {
+  return db.tasks
+    .where('createdAt')
+    .between(date.startOf('day').toDate(), date.endOf('day').toDate())
+    .toArray();
 };
 
 const getTasksByProject = async (projectId: number) => {

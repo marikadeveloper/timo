@@ -1,22 +1,11 @@
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
-import db from '../data/db';
-import { Task } from '../data/interfaces/Task';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { getTasksByDate } from '../data/services/taskService';
 
 function useLiveTasks(date: dayjs.Dayjs) {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const tasks = useLiveQuery(() => getTasksByDate(date));
 
-  useEffect(() => {
-    db.tasks
-      .where('createdAt')
-      .between(date.startOf('day').toDate(), date.endOf('day').toDate())
-      .toArray()
-      .then((tasks) => {
-        setTasks(tasks);
-      });
-  }, [date]);
-
-  return { tasks };
+  return { tasks: tasks || [] };
 }
 
 export { useLiveTasks };

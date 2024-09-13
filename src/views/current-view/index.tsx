@@ -1,5 +1,5 @@
 import React from 'react';
-import { useViewContext } from '../../context/view-context';
+import { useViewContext } from '../../context/viewContext';
 import Tasks from '../tasks';
 
 const CurrentView: React.FC = () => {
