@@ -8,7 +8,7 @@ interface Task {
 }
 interface TaskCreateInput {
   code?: string;
-  createdAt?: Date;
+  createdAt?: string;
   description: string;
   parentId?: number;
   projectId?: number;

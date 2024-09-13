@@ -14,7 +14,7 @@ const startTimer = async ({ taskId }: { taskId: number }) => {
   return db.timers.add(newTimer);
 };
 
-const endTimer = async ({ taskId }: { taskId: number }) => {
+const stopTimer = async ({ taskId }: { taskId: number }) => {
   const task = await db.tasks.get(taskId);
   if (!task) {
     throw new Error('Task not found');
@@ -38,4 +38,4 @@ const getLatestTimerByTaskId = async (taskId: number) => {
   return db.timers.where('taskId').equals(taskId).last();
 };
 
-export { endTimer, getLatestTimerByTaskId, getTimersByTaskId, startTimer };
+export { getLatestTimerByTaskId, getTimersByTaskId, startTimer, stopTimer };

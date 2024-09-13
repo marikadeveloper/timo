@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import db from '../db';
-import { TaskCreateInput, TaskUpdateInput } from '../interfaces/Task';
+import { Task, TaskCreateInput, TaskUpdateInput } from '../interfaces/Task';
 import { startTimer } from './timerService';
 
 const getAllTasks = async () => {
@@ -28,16 +28,19 @@ const createTask = async ({ description, projectId }: TaskCreateInput) => {
       throw new Error('Description is required');
     }
 
-    const taskId = await db.tasks.add({
+    const newTask: TaskCreateInput & { id?: number } = {
       description,
       projectId,
       code: '', // Temporary code
-      createdAt: new Date(),
-    });
+      createdAt: dayjs().format('YYYY-MM-DD'),
+    };
+
+    const taskId = await db.tasks.add(newTask);
 
     if (!taskId) {
       throw new Error('Failed to create task');
     }
+    newTask.id = taskId;
 
     // create timer
     await startTimer({ taskId });
@@ -51,8 +54,9 @@ const createTask = async ({ description, projectId }: TaskCreateInput) => {
       }
     }
     await db.tasks.update(taskId, { code: taskCode });
+    newTask.code = taskCode;
 
-    return taskId;
+    return newTask as Task;
   } catch (error) {
     console.error('Error creating task:', error);
     throw new Error('Failed to create task');
