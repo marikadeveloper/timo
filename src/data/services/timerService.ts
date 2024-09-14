@@ -1,7 +1,7 @@
 import db from '../db';
 import { TimerCreateInput } from '../interfaces/Timer';
 
-const startTimer = async ({ taskId }: { taskId: number }) => {
+const startTimer = async (taskId: number) => {
   const task = await db.tasks.get(taskId);
   if (!task) {
     throw new Error('Task not found');
@@ -14,7 +14,7 @@ const startTimer = async ({ taskId }: { taskId: number }) => {
   return db.timers.add(newTimer);
 };
 
-const stopTimer = async ({ taskId }: { taskId: number }) => {
+const stopTimer = async (taskId: number) => {
   const task = await db.tasks.get(taskId);
   if (!task) {
     throw new Error('Task not found');

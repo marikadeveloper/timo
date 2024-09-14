@@ -43,7 +43,7 @@ const createTask = async ({ description, projectId }: TaskCreateInput) => {
     newTask.id = taskId;
 
     // create timer
-    await startTimer({ taskId });
+    await startTimer(taskId);
 
     // create task code
     let taskCode = taskId.toString();
