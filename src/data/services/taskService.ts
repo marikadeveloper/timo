@@ -1,7 +1,10 @@
 import dayjs from 'dayjs';
+import { useOngoingTask } from '../../context/ongoingTaskContext';
 import db from '../db';
 import { Task, TaskCreateInput, TaskUpdateInput } from '../interfaces/Task';
 import { startTimer } from './timerService';
+
+const { setOngoingTask } = useOngoingTask();
 
 const getAllTasks = async () => {
   return db.tasks.toArray();
@@ -28,39 +31,49 @@ const createTask = async ({ description, projectId }: TaskCreateInput) => {
       throw new Error('Description is required');
     }
 
-    const newTask: TaskCreateInput & { id?: number } = {
-      description,
-      projectId,
-      code: '', // Temporary code
-      createdAt: dayjs().format('YYYY-MM-DD'),
-    };
+    const newTask = await addTaskToDb({ description, projectId });
+    await startTimer(newTask.id!);
+    newTask.code = await generateTaskCode(newTask.id!, projectId);
 
-    const taskId = await db.tasks.add(newTask);
+    await db.tasks.update(newTask.id!, { code: newTask.code });
 
-    if (!taskId) {
-      throw new Error('Failed to create task');
-    }
-    newTask.id = taskId;
-
-    // create timer
-    await startTimer(taskId);
-
-    // create task code
-    let taskCode = taskId.toString();
-    if (projectId) {
-      const project = await db.projects.get(projectId);
-      if (project) {
-        taskCode = `${project.code}-${taskId}`;
-      }
-    }
-    await db.tasks.update(taskId, { code: taskCode });
-    newTask.code = taskCode;
+    // Set the ongoing task
+    setOngoingTask(newTask as Task);
 
     return newTask as Task;
   } catch (error) {
     console.error('Error creating task:', error);
     throw new Error('Failed to create task');
   }
+};
+
+const addTaskToDb = async ({ description, projectId }: TaskCreateInput) => {
+  const newTask: TaskCreateInput & { id?: number } = {
+    description,
+    projectId,
+    code: '', // Temporary code
+    createdAt: dayjs().format('YYYY-MM-DD'),
+  };
+
+  const taskId = await db.tasks.add(newTask);
+
+  if (!taskId) {
+    throw new Error('Failed to create task');
+  }
+  newTask.id = taskId;
+
+  return newTask;
+};
+
+const generateTaskCode = async (taskId: number, projectId?: number) => {
+  let taskCode = taskId.toString();
+  if (projectId) {
+    const project = await db.projects.get(projectId);
+    if (project) {
+      taskCode = `${project.code}-${taskId}`;
+    }
+  }
+  return taskCode;
 };
 
 const updateTask = async ({ id, description, projectId }: TaskUpdateInput) => {
