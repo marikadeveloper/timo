@@ -8,16 +8,6 @@ const defaultValue: OngoingTaskContextType = {
 
 const OngoingTaskContext = createContext<OngoingTaskContextType>(defaultValue);
 
-export const useOngoingTask = () => {
-  const context = useContext(OngoingTaskContext);
-
-  if (!context) {
-    throw new Error('useOngoingTask must be used within a OngoingTaskProvider');
-  }
-
-  return context;
-};
-
 type OngoingTaskProviderProps = {
   children: React.ReactNode;
 };
@@ -37,4 +27,12 @@ const OngoingTaskProvider: React.FC<OngoingTaskProviderProps> = ({
   );
 };
 
-export default OngoingTaskProvider;
+function useOngoingTask() {
+  const context = useContext(OngoingTaskContext);
+  if (context === undefined) {
+    throw new Error('useOngoingTask must be used within a OngoingTaskProvider');
+  }
+  return context;
+}
+
+export { OngoingTaskProvider, useOngoingTask };

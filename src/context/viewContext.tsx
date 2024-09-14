@@ -19,7 +19,7 @@ const ViewProvider: React.FC<ViewProviderProps> = ({ children }) => {
   const [view, setView] = useState<AppView>('tasks'); // Set the initial view state
 
   // Memoize the view context value
-  const viewContextValue = useMemo(
+  const value = useMemo(
     () => ({
       view,
       setView,
@@ -28,11 +28,7 @@ const ViewProvider: React.FC<ViewProviderProps> = ({ children }) => {
   );
 
   // Render the view provider with the view context value
-  return (
-    <ViewContext.Provider value={viewContextValue}>
-      {children}
-    </ViewContext.Provider>
-  );
+  return <ViewContext.Provider value={value}>{children}</ViewContext.Provider>;
 };
 
 function useViewContext() {

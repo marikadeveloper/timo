@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import OngoingTaskProvider from './ongoingTaskContext';
+import { OngoingTaskProvider } from './ongoingTaskContext';
 import { ViewProvider } from './viewContext';
 
 /* TODO: add ThemeContext */

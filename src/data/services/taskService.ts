@@ -1,10 +1,7 @@
 import dayjs from 'dayjs';
-import { useOngoingTask } from '../../context/ongoingTaskContext';
 import db from '../db';
 import { Task, TaskCreateInput, TaskUpdateInput } from '../interfaces/Task';
 import { startTimer } from './timerService';
-
-const { setOngoingTask } = useOngoingTask();
 
 const getAllTasks = async () => {
   return db.tasks.toArray();
@@ -36,9 +33,6 @@ const createTask = async ({ description, projectId }: TaskCreateInput) => {
     newTask.code = await generateTaskCode(newTask.id!, projectId);
 
     await db.tasks.update(newTask.id!, { code: newTask.code });
-
-    // Set the ongoing task
-    setOngoingTask(newTask as Task);
 
     return newTask as Task;
   } catch (error) {
