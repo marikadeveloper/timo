@@ -1,4 +1,4 @@
-import Layout from './components/layout/index.tsx';
+import Layout from './components/shared/layout/index.tsx';
 import './data/db.ts';
 import db from './data/db.ts';
 import CurrentView from './views/current-view/index.tsx';

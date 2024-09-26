@@ -1,5 +1,5 @@
 import React from 'react';
-import useAccessibleDropdown from '../../hooks/useAccessibleDropdown';
+import useAccessibleDropdown from '../../../hooks/useAccessibleDropdown';
 import './styles.scss';
 
 type SelectOption = {

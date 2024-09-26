@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
-import IconButton from '../icon-button';
+import IconButton from '../../shared/icon-button';
 import DateNavigationPicker from './date-navigation-picker';
 import './styles.scss';
 

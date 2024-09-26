@@ -3,8 +3,8 @@ import React from 'react';
 import {
   getWeekdayString,
   VERBOSE_DATE_FORMAT,
-} from '../../../utils/dateUtils';
-import DatePicker from '../../shared/date-picker';
+} from '../../../../utils/dateUtils';
+import DatePicker from '../../../shared/date-picker';
 import './styles.scss';
 
 type DateNavigationPickerProps = {

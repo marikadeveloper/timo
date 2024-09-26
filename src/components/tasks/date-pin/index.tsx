@@ -4,7 +4,7 @@ import {
   getLocalStoragePinnedDate,
   setLocalStoragePinnedDate,
 } from '../../../utils/dateUtils';
-import IconButton from '../icon-button';
+import IconButton from '../../shared/icon-button';
 
 type DatePinProps = {
   date: dayjs.Dayjs;

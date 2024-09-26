@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Task } from '../../data/interfaces/Task';
-import { getTasksDurationString } from '../../utils/taskUtils';
+import { Task } from '../../../data/interfaces/Task';
+import { getTasksDurationString } from '../../../utils/taskUtils';
 
 type TasksTotalDurationProps = {
   tasks: Task[];
