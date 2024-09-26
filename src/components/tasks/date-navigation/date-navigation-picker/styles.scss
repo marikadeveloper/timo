@@ -1,5 +1,7 @@
 .date-navigation-picker {
   align-items: center;
-  display: flex;
+  display: grid;
+  grid-template-columns: 33px 1fr;
+  font-size: 15px;
   padding-left: 8px;
 }

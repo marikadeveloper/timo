@@ -27,6 +27,7 @@ const TaskCreate: React.FC = () => {
     <form
       className='task-create'
       onSubmit={handleSubmit}>
+      <h3 className='title--mini'>Create a task</h3>
       <Input
         className='task-create__input'
         type='text'

@@ -1,10 +1,5 @@
 .date-navigation {
   align-items: center;
   display: grid;
-  grid-template-columns: min-content min-content min-content;
-  span {
-    font-size: 17px;
-    font-weight: 500;
-    justify-self: center;
-  }
+  grid-template-columns: var(--input-height) min-content var(--input-height);
 }

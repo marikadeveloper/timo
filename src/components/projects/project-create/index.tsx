@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ProjectCreateInput } from '../../../data/interfaces/Project';
-import { createProject } from '../../../data/services/projectService';
+import useCreateProject from '../../../hooks/useCreateProject';
 import Button from '../../shared/button';
 import ColorPicker from '../../shared/color-picker';
+import FormErrors from '../../shared/form-errors';
 import Input from '../../shared/input';
 import './styles.scss';
 
+const emptyProjectCreateInput: ProjectCreateInput = {
+  code: '',
+  name: '',
+  color: '',
+};
+
 const ProjectCreate: React.FC = () => {
   const [projectCreateInput, setProjectCreateInput] =
-    useState<ProjectCreateInput>({
-      code: '',
-      name: '',
-      color: '',
-    });
+    useState<ProjectCreateInput>(emptyProjectCreateInput);
+
+  const { mutate: createProject, success, error } = useCreateProject();
+
+  useEffect(() => {
+    if (success) {
+      setProjectCreateInput(emptyProjectCreateInput);
+    }
+  }, [success]);
 
   const onFieldChange = (field: keyof ProjectCreateInput, value: string) => {
     setProjectCreateInput((prev) => ({
@@ -30,6 +41,7 @@ const ProjectCreate: React.FC = () => {
     <form
       className='project-create'
       onSubmit={handleSubmit}>
+      <h3 className='title--mini'>Create a project</h3>
       <section>
         <Input
           className='project-create__code'
@@ -55,6 +67,8 @@ const ProjectCreate: React.FC = () => {
         />
         <Button type='submit'>Create</Button>
       </section>
+
+      {error && <FormErrors errors={[error]} />}
     </form>
   );
 };

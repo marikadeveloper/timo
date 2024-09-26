@@ -6,12 +6,12 @@
     width: 110px;
   }
   section {
-    &:nth-child(1) {
+    &:nth-of-type(1) {
       display: grid;
       gap: 6px;
       grid-template-columns: min-content 1fr;
     }
-    &:nth-child(2) {
+    &:nth-of-type(2) {
       display: flex;
       align-items: center;
       justify-content: space-between;
