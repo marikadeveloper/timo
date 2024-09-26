@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
 import ReactDatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css';
-import { DEFAULT_DATE_FORMAT } from '../../utils/dateUtils';
+import { DEFAULT_DATE_FORMAT } from '../../../utils/dateUtils';
 import './styles.scss';
 
 // picked from the official doc

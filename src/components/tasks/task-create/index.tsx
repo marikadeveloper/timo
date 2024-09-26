@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { TaskCreateInput } from '../../data/interfaces/Task';
-import Button from '../button';
-import Input from '../input';
+import { TaskCreateInput } from '../../../data/interfaces/Task';
+import Button from '../../shared/button';
+import Input from '../../shared/input';
 import ProjectSelect from './project-select';
 import './styles.scss';
 

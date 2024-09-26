@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {
   getLocalStoragePinnedDate,
   setLocalStoragePinnedDate,
-} from '../../utils/dateUtils';
+} from '../../../utils/dateUtils';
 import IconButton from '../icon-button';
 
 type DatePinProps = {

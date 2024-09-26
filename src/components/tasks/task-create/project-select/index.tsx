@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Project } from '../../../data/interfaces/Project';
-import { getAllProjects } from '../../../data/services/projectService';
-import Select, { SelectOption } from '../../select';
+import { Project } from '../../../../data/interfaces/Project';
+import { getAllProjects } from '../../../../data/services/projectService';
+import Select, { SelectOption } from '../../../shared/select';
 
 type ProjectSelectProps = {
   value?: number;

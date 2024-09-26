@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
-import DateNavigation from '../../components/date-navigation';
-import Task from '../../components/task';
-import TaskCreate from '../../components/task-create';
-import TasksExportButton from '../../components/tasks-export-button';
-import TasksTotalDuration from '../../components/tasks-total-duration';
+import DateNavigation from '../../components/tasks/date-navigation';
+import Task from '../../components/tasks/task';
+import TaskCreate from '../../components/tasks/task-create';
+import TasksExportButton from '../../components/tasks/tasks-export-button';
+import TasksTotalDuration from '../../components/tasks/tasks-total-duration';
 import { useLiveTasks } from '../../hooks/useLiveTasks';
 import { getLocalStoragePinnedDate } from '../../utils/dateUtils';
 import './styles.scss';

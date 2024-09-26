@@ -1,6 +1,6 @@
 import React from 'react';
-import { useViewContext } from '../../../context/viewContext';
-import { DEFAULT_VIEW } from '../../../utils/viewUtils';
+import { useViewContext } from '../../../../context/viewContext';
+import { DEFAULT_VIEW } from '../../../../utils/viewUtils';
 import Icon from '../../icon';
 import HeaderNavButton from './header-nav-button';
 import './styles.scss';
