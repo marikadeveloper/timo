@@ -31,6 +31,7 @@ const TaskCreate: React.FC = () => {
         className='task-create__input'
         type='text'
         placeholder='What are you working on?'
+        required
         value={taskCreateInput.description}
         onChange={(e) => onFieldChange('description', e.target.value)}
       />
