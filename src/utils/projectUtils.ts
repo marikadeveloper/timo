@@ -1,5 +1,6 @@
 const PROJECT_CODE_MIN_LENGTH = 3;
 const PROJECT_CODE_MAX_LENGTH = 10;
+// only alphanumeric characters, length between 3 and 10 characters inclusive
 const PROJECT_CODE_REGEX = /^[a-zA-Z0-9]{3,10}$/;
 const PROJECTS_DEFAULT_COLORS = [
   '#393b42',

@@ -1,0 +1,21 @@
+.project-create {
+  border-top: var(--border-black);
+  display: grid;
+  gap: 6px;
+  padding: 8px 0;
+  &__code {
+    width: 110px;
+  }
+  section {
+    &:nth-child(1) {
+      display: grid;
+      gap: 6px;
+      grid-template-columns: min-content 1fr;
+    }
+    &:nth-child(2) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}

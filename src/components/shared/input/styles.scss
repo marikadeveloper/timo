@@ -4,4 +4,8 @@
   @include timo-border;
   border-width: 1px;
   height: var(--input-height);
+
+  background-color: #fff;
+  border-radius: var(--border-radius-small);
+  height: var(--input-height);
 }

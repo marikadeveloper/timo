@@ -3,10 +3,10 @@ import './styles.scss';
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
-const Input: React.FC<InputProps> = (props) => {
+const Input: React.FC<InputProps> = ({ className, ...props }) => {
   return (
     <input
-      className='input'
+      className={`input ${className}`}
       {...props}
     />
   );
