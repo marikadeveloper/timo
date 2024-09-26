@@ -1,7 +1,6 @@
 @import './src/assets/scss/mixins.scss';
 
-.input {
+.card {
   @include timo-border--flat;
-  background-color: #fff;
-  height: var(--input-height);
+  padding: 4px 6px;
 }

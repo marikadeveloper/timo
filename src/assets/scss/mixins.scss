@@ -1,8 +1,13 @@
 @mixin timo-border {
-  border: 1px solid #000;
+  border: var(--border-black);
   border-radius: var(--border-radius-small);
   border-bottom-width: 2px;
   border-right-width: 2px;
+}
+
+@mixin timo-border--flat {
+  border: var(--border-black);
+  border-radius: var(--border-radius-small);
 }
 
 @mixin base-button {

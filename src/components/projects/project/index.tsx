@@ -1,4 +1,5 @@
 import type { Project } from '../../../data/interfaces/Project';
+import Card from '../../shared/card';
 
 type ProjectProps = {
   project: Project;
@@ -6,11 +7,11 @@ type ProjectProps = {
 
 const Project: React.FC<ProjectProps> = ({ project }) => {
   return (
-    <div className='project'>
+    <Card className='project'>
       <p>
         {project.code} - {project.name}
       </p>
-    </div>
+    </Card>
   );
 };
 
