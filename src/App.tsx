@@ -19,6 +19,7 @@ function App() {
   return (
     <Layout>
       <CurrentView />
+      {/* <button onClick={dangerouslyDeleteAllTasks}>Delete all tasks</button> */}
     </Layout>
   );
 }

@@ -10,7 +10,7 @@ const getAllTasks = async () => {
 const getTasksByDate = async (date: dayjs.Dayjs) => {
   return db.tasks
     .where('createdAt')
-    .between(date.startOf('day').toDate(), date.endOf('day').toDate())
+    .equals(date.format('YYYY-MM-DD'))
     .toArray();
 };
 
@@ -81,8 +81,13 @@ const deleteTask = async (id: number) => {
   return db.tasks.delete(id);
 };
 
+const dangerouslyDeleteAllTasks = async () => {
+  return db.tasks.clear();
+};
+
 export {
   createTask,
+  dangerouslyDeleteAllTasks,
   deleteTask,
   getAllTasks,
   getTaskById,

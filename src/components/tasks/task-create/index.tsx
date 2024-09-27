@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TaskCreateInput } from '../../../data/interfaces/Task';
+import useCreateTask from '../../../hooks/useCreateTask';
 import Button from '../../shared/button';
+import FormErrors from '../../shared/form-errors';
 import Input from '../../shared/input';
 import ProjectSelect from './project-select';
 import './styles.scss';
 
+const emptyTaskCreateInput: TaskCreateInput = {
+  description: '',
+  projectId: undefined,
+};
+
 const TaskCreate: React.FC = () => {
-  const [taskCreateInput, setTaskCreateInput] = useState<TaskCreateInput>({
-    description: '',
-    projectId: undefined,
-  });
+  const [taskCreateInput, setTaskCreateInput] =
+    useState<TaskCreateInput>(emptyTaskCreateInput);
+  const { mutate, success, error } = useCreateTask();
+
+  useEffect(() => {
+    if (success) {
+      setTaskCreateInput(emptyTaskCreateInput);
+    }
+  }, [success]);
 
   const onFieldChange = (field: keyof TaskCreateInput, value: string) => {
     setTaskCreateInput((prev) => ({
@@ -20,7 +32,7 @@ const TaskCreate: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(taskCreateInput);
+    mutate(taskCreateInput);
   };
 
   return (
@@ -43,6 +55,7 @@ const TaskCreate: React.FC = () => {
         />
         <Button type='submit'>Start</Button>
       </div>
+      <section>{error && <FormErrors errors={[error]} />}</section>
     </form>
   );
 };
