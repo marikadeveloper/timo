@@ -5,6 +5,7 @@ import './styles.scss';
 type IconButtonProps = {
   ariaLabel: string;
   iconAriaLabel: string;
+  iconFill?: string;
   iconName: string;
   onClick: () => void;
   variant?: 'blackBg' | 'whiteBg';
@@ -13,6 +14,7 @@ type IconButtonProps = {
 const IconButton: React.FC<IconButtonProps> = ({
   ariaLabel,
   iconAriaLabel,
+  iconFill,
   iconName,
   onClick,
   variant = 'whiteBg',
@@ -24,6 +26,7 @@ const IconButton: React.FC<IconButtonProps> = ({
       onClick={onClick}>
       <Icon
         ariaLabel={iconAriaLabel}
+        fill={iconFill}
         name={iconName}
       />
     </button>

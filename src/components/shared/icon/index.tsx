@@ -4,14 +4,22 @@ import './styles.scss';
 
 type IconProps = {
   ariaLabel: string;
+  fill?: string;
   name: string;
 };
 
-const Icon: React.FC<IconProps> = ({ ariaLabel, name }) => {
+const Icon: React.FC<IconProps> = ({
+  ariaLabel,
+  fill = 'currentColor',
+  name,
+}) => {
   return (
     <ReactSVG
-      className='icon'
       aria-label={ariaLabel}
+      className='icon'
+      style={{
+        color: fill,
+      }}
       src={`src/assets/images/${name}.svg`}
     />
   );
