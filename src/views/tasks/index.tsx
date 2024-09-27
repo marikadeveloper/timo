@@ -24,6 +24,7 @@ const Tasks: React.FC = () => {
   useEffect(() => {
     const fetchOngoingTask = async () => {
       const task = await getOngoingTask();
+      console.log(task);
       setOngoingTask(task);
     };
 

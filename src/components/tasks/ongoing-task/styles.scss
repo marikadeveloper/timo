@@ -3,9 +3,14 @@
   gap: 6px;
   padding: 8px 0;
   &__duration {
-    white-space: nowrap;
+    align-items: center;
+    display: flex;
+    gap: 4px;
+    p {
+      white-space: nowrap;
+    }
   }
-  p + div {
+  &__details {
     align-items: center;
     display: grid;
     grid-template-columns: 1fr min-content min-content;

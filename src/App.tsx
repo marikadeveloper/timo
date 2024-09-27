@@ -1,7 +1,6 @@
 import Layout from './components/shared/layout/index.tsx';
 import './data/db.ts';
 import db from './data/db.ts';
-import { dangerouslyDeleteAllTasks } from './data/services/taskService.ts';
 import CurrentView from './views/current-view/index.tsx';
 
 console.log('tasks', await db.tasks.toArray());
@@ -20,7 +19,7 @@ function App() {
   return (
     <Layout>
       <CurrentView />
-      <button onClick={dangerouslyDeleteAllTasks}>Delete all tasks</button>
+      {/* <button onClick={dangerouslyDeleteAllTasks}>Delete all tasks</button> */}
     </Layout>
   );
 }

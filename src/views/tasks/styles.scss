@@ -1,4 +1,6 @@
 .tasks {
+  display: grid;
+  gap: 10px;
   &__header {
     display: flex;
     align-items: center;
@@ -9,5 +11,9 @@
       align-items: center;
       gap: 8px;
     }
+  }
+
+  &__footer {
+    border-top: var(--border-black);
   }
 }
