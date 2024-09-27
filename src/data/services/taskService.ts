@@ -8,6 +8,7 @@ const getAllTasks = async () => {
 };
 
 const getTasksByDate = async (date: dayjs.Dayjs) => {
+  // TODO: how to handle tasks that span multiple days?
   return db.tasks
     .where('createdAt')
     .equals(date.format('YYYY-MM-DD'))
