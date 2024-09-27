@@ -1,6 +1,14 @@
 .projects {
+  display: grid;
+  grid-template-rows: 300px 1fr;
+  gap: 10px;
   &__list {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 4px;
+    overflow-y: auto;
+  }
+  &__footer {
+    border-top: var(--border-black);
   }
 }

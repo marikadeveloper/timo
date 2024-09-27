@@ -1,9 +1,9 @@
 import {
   generateProjectCode,
+  getRandomProjectColor,
   isProjectCodeValid,
   PROJECT_CODE_MAX_LENGTH,
   PROJECT_CODE_MIN_LENGTH,
-  PROJECTS_DEFAULT_COLORS,
 } from '../../utils/projectUtils';
 import db from '../db';
 import { ProjectCreateInput, ProjectUpdateInput } from '../interfaces/Project';
@@ -28,11 +28,9 @@ const createProject = async ({ code, name, color }: ProjectCreateInput) => {
   }
   if (!color?.trim()) {
     // assign a random color
-    color =
-      PROJECTS_DEFAULT_COLORS[
-        Math.floor(Math.random() * PROJECTS_DEFAULT_COLORS.length)
-      ];
+    color = getRandomProjectColor('light');
   }
+
   return db.projects.add({
     code: code || generateProjectCode(name),
     name,
@@ -40,16 +38,16 @@ const createProject = async ({ code, name, color }: ProjectCreateInput) => {
   });
 };
 
-const updateProject = async ({ id, name, color }: ProjectUpdateInput) => {
+const updateProject = async ({ id, name }: ProjectUpdateInput) => {
   if (!name?.trim()) {
     throw new Error('Name is required');
   }
-  return db.projects.update(id, { name, color });
+  return db.projects.update(id, { name });
 };
 
 const deleteProject = async (id: number) => {
-  const tasksCount = await getTasksByProject(id);
-  if (tasksCount) {
+  const projectTasks = await getTasksByProject(id);
+  if (projectTasks?.length) {
     throw new Error('Cannot delete a project with tasks assigned');
   }
   return db.projects.delete(id);

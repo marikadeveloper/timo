@@ -48,6 +48,7 @@ const Tasks: React.FC = () => {
         )}
       </section>
       <section className='tasks__list'>
+        {!tasks?.length && <p>Start an activity below 🙂 ⏬️</p>}
         {tasks
           ?.filter((t) => t.id !== ongoingTask?.id)
           .map((task) => (

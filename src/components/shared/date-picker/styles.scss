@@ -6,4 +6,7 @@
     min-width: calc((4px * 2) + 0.54em * 8 + 0.217em * 2);
     padding-left: 8px;
   }
+  .react-date-picker__calendar {
+    z-index: 2;
+  }
 }

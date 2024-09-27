@@ -10,6 +10,7 @@ const Projects: React.FC = () => {
   return (
     <div className='projects'>
       <section className='projects__list'>
+        {!projects?.length && <p>Create a project below 🙂 ⏬️</p>}
         {projects?.map((project) => (
           <Project
             key={project.id}

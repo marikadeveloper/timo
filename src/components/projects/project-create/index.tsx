@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ProjectCreateInput } from '../../../data/interfaces/Project';
 import useCreateProject from '../../../hooks/useCreateProject';
+import { getRandomProjectColor } from '../../../utils/projectUtils';
 import Button from '../../shared/button';
 import ColorPicker from '../../shared/color-picker';
 import FormErrors from '../../shared/form-errors';
@@ -10,7 +11,7 @@ import './styles.scss';
 const emptyProjectCreateInput: ProjectCreateInput = {
   code: '',
   name: '',
-  color: '',
+  color: getRandomProjectColor('light'),
 };
 
 const ProjectCreate: React.FC = () => {
@@ -21,7 +22,10 @@ const ProjectCreate: React.FC = () => {
 
   useEffect(() => {
     if (success) {
-      setProjectCreateInput(emptyProjectCreateInput);
+      setProjectCreateInput({
+        ...emptyProjectCreateInput,
+        color: getRandomProjectColor('light'),
+      });
     }
   }, [success]);
 

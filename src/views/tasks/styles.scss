@@ -1,5 +1,6 @@
 .tasks {
   display: grid;
+  grid-template-rows: min-content 300px 1fr;
   gap: 10px;
   &__header {
     display: flex;
@@ -11,6 +12,13 @@
       align-items: center;
       gap: 8px;
     }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow-y: auto;
   }
 
   &__footer {

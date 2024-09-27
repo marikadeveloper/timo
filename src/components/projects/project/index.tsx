@@ -33,7 +33,11 @@ const Project: React.FC<ProjectProps> = ({ project }) => {
   };
 
   return (
-    <Card className='project'>
+    <Card
+      className='project'
+      style={{
+        backgroundColor: project.color,
+      }}>
       <section>
         <p>{project.code}</p>
         <ContentEditable

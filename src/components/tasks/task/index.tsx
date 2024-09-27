@@ -2,6 +2,7 @@ import React from 'react';
 import { TaskExtended } from '../../../data/interfaces/Task';
 import { getTaskDurationString } from '../../../utils/taskUtils';
 import Card from '../../shared/card';
+import TaskCode from '../task-code';
 import './styles.scss';
 
 type TaskProps = {
@@ -11,7 +12,7 @@ type TaskProps = {
 const Task: React.FC<TaskProps> = ({ task }) => {
   return (
     <Card className='task'>
-      <p>{task.code}</p>
+      <TaskCode task={task} />
       <p>{task.description}</p>
       <p>{getTaskDurationString(task.timers)}</p>
     </Card>
