@@ -1,4 +1,4 @@
-import { SelectOption } from '../components/select';
+import { SelectOption } from '../components/shared/select';
 
 const registerOpenDropdownHandlers = ({
   options,
@@ -11,7 +11,6 @@ const registerOpenDropdownHandlers = ({
 
   const keyDownCallback = (e: KeyboardEvent) => {
     e.preventDefault();
-    console.log(e);
     switch (e.key) {
       case 'Up':
       case 'ArrowUp':

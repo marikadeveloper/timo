@@ -30,7 +30,6 @@ function useCreateTask() {
         setOngoingTask(newTask);
         setSuccess(true);
       } catch (error: any) {
-        console.log(error.message);
         setError(error.message);
       }
     },

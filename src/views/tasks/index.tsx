@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import DateNavigation from '../../components/tasks/date-navigation';
 import Task from '../../components/tasks/task';
 import TaskCreate from '../../components/tasks/task-create';
@@ -16,10 +16,6 @@ const Tasks: React.FC = () => {
     () => getLocalStoragePinnedDate() || today,
   );
   const { tasks } = useLiveTasks(date);
-
-  useEffect(() => {
-    console.log(date, tasks);
-  }, [tasks, date]);
 
   return (
     <div className='tasks'>

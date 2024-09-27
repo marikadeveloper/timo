@@ -1,6 +1,6 @@
 .layout {
   position: relative;
   &__content {
-    padding: 0 var(--horizontal-padding);
+    padding: 10px var(--horizontal-padding) 0;
   }
 }

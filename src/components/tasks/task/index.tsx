@@ -8,7 +8,6 @@ type TaskProps = {
 };
 
 const Task: React.FC<TaskProps> = ({ task }) => {
-  console.log(getTaskDurationString(task.timers));
   return (
     <div className='task'>
       <p>{task.description}</p>

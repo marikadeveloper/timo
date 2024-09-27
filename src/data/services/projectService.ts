@@ -7,6 +7,7 @@ import {
 } from '../../utils/projectUtils';
 import db from '../db';
 import { ProjectCreateInput, ProjectUpdateInput } from '../interfaces/Project';
+import { getTasksByProject } from './taskService';
 
 const getAllProjects = async () => {
   return db.projects.toArray();
@@ -39,14 +40,18 @@ const createProject = async ({ code, name, color }: ProjectCreateInput) => {
   });
 };
 
-const updateProject = async ({ id, code, name, color }: ProjectUpdateInput) => {
+const updateProject = async ({ id, name, color }: ProjectUpdateInput) => {
   if (!name?.trim()) {
     throw new Error('Name is required');
   }
-  return db.projects.update(id, { code, name, color });
+  return db.projects.update(id, { name, color });
 };
 
 const deleteProject = async (id: number) => {
+  const tasksCount = await getTasksByProject(id);
+  if (tasksCount) {
+    throw new Error('Cannot delete a project with tasks assigned');
+  }
   return db.projects.delete(id);
 };
 

@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
 import type { Project } from '../../../data/interfaces/Project';
-import { deleteProject } from '../../../data/services/projectService';
+import useDeleteProject from '../../../hooks/useDeleteProject';
+import useUpdateProject from '../../../hooks/useUpdateProject';
 import Card from '../../shared/card';
+import FormErrors from '../../shared/form-errors';
 import IconButton from '../../shared/icon-button';
 import './styles.scss';
 
@@ -11,33 +13,44 @@ type ProjectProps = {
 };
 
 const Project: React.FC<ProjectProps> = ({ project }) => {
-  // TODO: project delete and inline edit (on click)
-
+  const nameRef = useRef<HTMLElement>(null);
   const [state, setState] = useState({ html: project.name });
+  const { mutate: deleteProject, error: deleteProjectError } = useDeleteProject(
+    project.id,
+  );
+  const { mutate: updateProject } = useUpdateProject();
 
   const handleChange = (e: ContentEditableEvent) => {
     setState({ html: e.target.value });
   };
 
   const onProjectDelete = () => {
-    deleteProject(project.id);
+    deleteProject();
+  };
+
+  const onProjectUpdate = () => {
+    updateProject({ id: project.id, name: nameRef.current?.innerText });
   };
 
   return (
     <Card className='project'>
-      <p>{project.code}</p>
-      <ContentEditable
-        html={state.html} // innerHTML of the editable div
-        disabled={false} // use true to disable edition
-        onChange={handleChange} // handle innerHTML change
-      />
-      <IconButton
-        iconFill='red'
-        iconName='trash'
-        ariaLabel='Delete project'
-        iconAriaLabel='Trash can'
-        onClick={onProjectDelete}
-      />
+      <section>
+        <p>{project.code}</p>
+        <ContentEditable
+          html={state.html}
+          onChange={handleChange} // handle innerHTML change
+          innerRef={nameRef}
+          onBlur={onProjectUpdate}
+        />
+        <IconButton
+          iconFill='#e42626'
+          iconName='trash'
+          ariaLabel='Delete project'
+          iconAriaLabel='Trash can'
+          onClick={onProjectDelete}
+        />
+      </section>
+      {deleteProjectError && <FormErrors errors={[deleteProjectError]} />}
     </Card>
   );
 };

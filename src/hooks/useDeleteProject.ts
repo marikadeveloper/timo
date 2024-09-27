@@ -1,14 +1,13 @@
 import { useCallback, useState } from 'react';
-import { ProjectCreateInput } from '../data/interfaces/Project';
-import { createProject } from '../data/services/projectService';
+import { deleteProject } from '../data/services/projectService';
 
-function useCreateProject() {
+function useDeleteProject(projectId: number) {
   const [error, setError] = useState<string>();
   const [success, setSuccess] = useState<boolean>(false);
-  const mutate = useCallback(async (project: ProjectCreateInput) => {
+  const mutate = useCallback(async () => {
     try {
       setError(undefined);
-      await createProject(project);
+      await deleteProject(projectId);
       setSuccess(true);
     } catch (error: any) {
       setError(error.message);
@@ -18,4 +17,4 @@ function useCreateProject() {
   return { mutate, success, error };
 }
 
-export default useCreateProject;
+export default useDeleteProject;
