@@ -1,0 +1,14 @@
+.ongoing-task {
+  display: grid;
+  gap: 6px;
+  padding: 8px 0;
+  &__duration {
+    white-space: nowrap;
+  }
+  p + div {
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr min-content min-content;
+    gap: 8px;
+  }
+}

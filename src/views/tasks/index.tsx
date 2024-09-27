@@ -1,10 +1,13 @@
 import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DateNavigation from '../../components/tasks/date-navigation';
+import OngoingTask from '../../components/tasks/ongoing-task';
 import Task from '../../components/tasks/task';
 import TaskCreate from '../../components/tasks/task-create';
 import TasksExportButton from '../../components/tasks/tasks-export-button';
 import TasksTotalDuration from '../../components/tasks/tasks-total-duration';
+import { TaskExtended } from '../../data/interfaces/Task';
+import { getOngoingTask } from '../../data/services/taskService';
 import { useLiveTasks } from '../../hooks/useLiveTasks';
 import { getLocalStoragePinnedDate } from '../../utils/dateUtils';
 import './styles.scss';
@@ -16,6 +19,16 @@ const Tasks: React.FC = () => {
     () => getLocalStoragePinnedDate() || today,
   );
   const { tasks } = useLiveTasks(date);
+  const [ongoingTask, setOngoingTask] = useState<TaskExtended | null>(null);
+
+  useEffect(() => {
+    const fetchOngoingTask = async () => {
+      const task = await getOngoingTask();
+      setOngoingTask(task);
+    };
+
+    fetchOngoingTask();
+  }, [tasks]);
 
   return (
     <div className='tasks'>
@@ -34,15 +47,18 @@ const Tasks: React.FC = () => {
         )}
       </section>
       <section className='tasks__list'>
-        {tasks?.map((task) => (
-          <Task
-            key={task.id}
-            task={task}
-          />
-        ))}
+        {tasks
+          ?.filter((t) => t.id !== ongoingTask?.id)
+          .map((task) => (
+            <Task
+              key={task.id}
+              task={task}
+            />
+          ))}
       </section>
       <section className='tasks__footer'>
-        <TaskCreate />
+        {ongoingTask && <OngoingTask task={ongoingTask} />}
+        {!ongoingTask && <TaskCreate />}
       </section>
     </div>
   );

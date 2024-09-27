@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { attachInfoToTasks } from '../../utils/exportUtils';
+import { hasTaskEnded } from '../../utils/taskUtils';
 import db from '../db';
 import {
   Task,
@@ -7,7 +8,7 @@ import {
   TaskExtended,
   TaskUpdateInput,
 } from '../interfaces/Task';
-import { startTimer } from './timerService';
+import { deleteTimers, startTimer } from './timerService';
 
 const getAllTasks = async () => {
   return db.tasks.toArray();
@@ -34,8 +35,18 @@ const getTaskById = async (taskId: number) => {
   return db.tasks.get(taskId);
 };
 
-const getOngoingTask = async () => {
+const getLastTask = async () => {
   return db.tasks.orderBy('id').last();
+};
+
+const getOngoingTask = async () => {
+  const lastTask = await getLastTask();
+  if (!lastTask) return null;
+
+  if (await hasTaskEnded(lastTask.id!)) return null;
+
+  await attachInfoToTasks([lastTask]);
+  return lastTask as TaskExtended;
 };
 
 const createTask = async ({ description, projectId }: TaskCreateInput) => {
@@ -97,10 +108,12 @@ const updateTask = async ({ id, description, projectId }: TaskUpdateInput) => {
 };
 
 const deleteTask = async (id: number) => {
+  await deleteTimers(id);
   return db.tasks.delete(id);
 };
 
 const dangerouslyDeleteAllTasks = async () => {
+  await db.timers.clear();
   return db.tasks.clear();
 };
 
@@ -109,6 +122,7 @@ export {
   dangerouslyDeleteAllTasks,
   deleteTask,
   getAllTasks,
+  getLastTask,
   getOngoingTask,
   getTaskById,
   getTasksByDate,
