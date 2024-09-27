@@ -34,10 +34,17 @@ const getTaskById = async (taskId: number) => {
   return db.tasks.get(taskId);
 };
 
+const getOngoingTask = async () => {
+  return db.tasks.orderBy('id').last();
+};
+
 const createTask = async ({ description, projectId }: TaskCreateInput) => {
   try {
     if (!description?.trim()) {
       throw new Error('Description is required');
+    }
+    if (typeof projectId === 'string') {
+      projectId = Number(projectId);
     }
 
     const newTask = await addTaskToDb({ description, projectId });
@@ -102,6 +109,7 @@ export {
   dangerouslyDeleteAllTasks,
   deleteTask,
   getAllTasks,
+  getOngoingTask,
   getTaskById,
   getTasksByDate,
   getTasksByProject,

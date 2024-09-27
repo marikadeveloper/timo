@@ -1,6 +1,7 @@
 import React from 'react';
 import { TaskExtended } from '../../../data/interfaces/Task';
 import { getTaskDurationString } from '../../../utils/taskUtils';
+import Card from '../../shared/card';
 import './styles.scss';
 
 type TaskProps = {
@@ -9,10 +10,17 @@ type TaskProps = {
 
 const Task: React.FC<TaskProps> = ({ task }) => {
   return (
-    <div className='task'>
+    <Card className='task'>
+      <p>{task.code}</p>
       <p>{task.description}</p>
       <p>{getTaskDurationString(task.timers)}</p>
-    </div>
+      {/* <IconButton
+        iconName='stop-circle'
+        ariaLabel='Stop task'
+        iconAriaLabel='Stop icon'
+        onClick={() => console.log('Stop task')}
+      /> */}
+    </Card>
   );
 };
 

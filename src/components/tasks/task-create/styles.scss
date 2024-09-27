@@ -3,8 +3,9 @@
   gap: 6px;
   padding: 8px 0;
   &__input + div {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
+    display: grid;
+    grid-template-columns: 1fr min-content;
+    gap: 20px;
   }
 }

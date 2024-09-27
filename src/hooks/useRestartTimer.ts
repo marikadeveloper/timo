@@ -1,8 +1,8 @@
-import { useOngoingTask } from '../context/ongoingTaskContext';
+import { getOngoingTask } from '../data/services/taskService';
 import { startTimer } from '../data/services/timerService';
 
-function useRestartTimer() {
-  const { ongoingTask } = useOngoingTask();
+async function useRestartTimer() {
+  const ongoingTask = await getOngoingTask();
   const restartTimer = async () => {
     if (ongoingTask) {
       await startTimer(ongoingTask.id);
