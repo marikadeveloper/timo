@@ -1,6 +1,12 @@
 import dayjs from 'dayjs';
+import { attachInfoToTasks } from '../../utils/exportUtils';
 import db from '../db';
-import { Task, TaskCreateInput, TaskUpdateInput } from '../interfaces/Task';
+import {
+  Task,
+  TaskCreateInput,
+  TaskExtended,
+  TaskUpdateInput,
+} from '../interfaces/Task';
 import { startTimer } from './timerService';
 
 const getAllTasks = async () => {
@@ -9,10 +15,15 @@ const getAllTasks = async () => {
 
 const getTasksByDate = async (date: dayjs.Dayjs) => {
   // TODO: how to handle tasks that span multiple days?
-  return db.tasks
+  const tasks = await db.tasks
     .where('createdAt')
     .equals(date.format('YYYY-MM-DD'))
     .toArray();
+
+  // attach project, parent, and timers to each task
+  await attachInfoToTasks(tasks);
+
+  return tasks as TaskExtended[];
 };
 
 const getTasksByProject = async (projectId: number) => {

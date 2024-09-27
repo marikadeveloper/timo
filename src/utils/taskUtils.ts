@@ -7,6 +7,10 @@ import {
 } from '../data/services/timerService';
 import { getDurationStringFromMilliseconds } from './dateUtils';
 
+const allTimersStopped = (timers: Timer[]): boolean => {
+  return timers.every((timer) => !!timer.end);
+};
+
 const getTimerDurationMilliseconds = (timer: Timer): number => {
   return timer.start && timer.end
     ? dayjs(timer.end).diff(dayjs(timer.start))
@@ -48,11 +52,17 @@ const getTaskDuration = (timers: Timer[]) => {
 };
 
 const getTaskDurationString = (timers: Timer[]): string => {
-  return timers.length
-    ? getDurationStringFromMilliseconds(
-        getTaskTotalDurationMilliseconds(timers),
-      )
-    : '-';
+  if (!timers.length) return '-';
+
+  if (allTimersStopped(timers)) {
+    return getDurationStringFromMilliseconds(
+      getTaskTotalDurationMilliseconds(timers),
+    );
+  }
+
+  // the last timer is ongoing. Get relative string (e.g. 2 minutes ago, 2 hours ago...)
+  const lastTimer = timers[timers.length - 1];
+  return dayjs(lastTimer.start).fromNow();
 };
 
 const getTasksDurationString = async (tasks: Task[]): Promise<string> => {

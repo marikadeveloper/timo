@@ -1,16 +1,18 @@
 import React from 'react';
-import { Task as TaskType } from '../../../data/interfaces/Task';
+import { TaskExtended } from '../../../data/interfaces/Task';
+import { getTaskDurationString } from '../../../utils/taskUtils';
 import './styles.scss';
 
 type TaskProps = {
-  task: TaskType;
+  task: TaskExtended;
 };
 
 const Task: React.FC<TaskProps> = ({ task }) => {
+  console.log(getTaskDurationString(task.timers));
   return (
     <div className='task'>
       <p>{task.description}</p>
-      <p>TODO</p>
+      <p>{getTaskDurationString(task.timers)}</p>
     </div>
   );
 };

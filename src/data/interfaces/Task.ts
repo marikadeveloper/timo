@@ -1,3 +1,6 @@
+import { Project } from './Project';
+import { Timer } from './Timer';
+
 interface Task {
   id: number;
   code: string;
@@ -5,6 +8,10 @@ interface Task {
   description: string;
   parentId?: number;
   projectId?: number;
+}
+interface TaskExtended extends Task {
+  timers: Timer[];
+  project?: Project;
 }
 interface TaskCreateInput {
   code?: string;
@@ -19,7 +26,7 @@ interface TaskUpdateInput {
   parentId?: number;
   projectId?: number;
 }
-export type { Task, TaskCreateInput, TaskUpdateInput };
+export type { Task, TaskCreateInput, TaskExtended, TaskUpdateInput };
 
 /* 
 note for who is reading this: I'm not sure if this is the best way to do the "timers" field,
