@@ -17,6 +17,13 @@ const db = new Dexie('TasksDatabase') as Dexie & {
   timers: EntityTable<Timer, 'id', TimerCreateInput>;
 };
 
+db.version(3).stores({
+  projects: '++id, code, name, color',
+  tasks:
+    '++id, code, createdAt, description, parentId, projectId, status, lastEndedAt',
+  timers: '++id, start, end, taskId',
+});
+
 db.version(2).stores({
   projects: '++id, code, name, color',
   tasks: '++id, code, createdAt, description, parentId, projectId',

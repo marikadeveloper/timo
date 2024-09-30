@@ -25,6 +25,8 @@ const getDurationStringFromMilliseconds = (milliseconds: number): string => {
   const totalMinutes = Math.floor(
     (milliseconds % (1000 * 60 * 60)) / (1000 * 60),
   );
+  if (!totalHours && !totalMinutes) return '< 1m';
+
   return `${totalHours ? `${totalHours}h ` : ''}${
     totalMinutes ? `${totalMinutes}m` : ''
   }`.trim();

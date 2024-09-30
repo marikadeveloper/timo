@@ -1,6 +1,10 @@
 import { Project } from './Project';
 import { Timer } from './Timer';
 
+enum TaskStatus {
+  ACTIVE = 'ACTIVE',
+  FINISHED = 'FINISHED',
+}
 interface Task {
   id: number;
   code: string;
@@ -8,6 +12,8 @@ interface Task {
   description: string;
   parentId?: number;
   projectId?: number;
+  status: TaskStatus;
+  lastEndedAt?: string; // Date
 }
 interface TaskExtended extends Task {
   timers: Timer[];
@@ -18,7 +24,9 @@ interface TaskCreateInput {
   createdAt?: string;
   description: string;
   parentId?: number;
-  projectId?: number;
+  projectId?: number; // TODO: if parent present, projectId is taken from the parent
+  status?: TaskStatus;
+  lastEndedAt?: string;
 }
 interface TaskUpdateInput {
   id: number;
@@ -26,8 +34,8 @@ interface TaskUpdateInput {
   parentId?: number;
   projectId?: number;
 }
+export { TaskStatus };
 export type { Task, TaskCreateInput, TaskExtended, TaskUpdateInput };
-
 /* 
 note for who is reading this: I'm not sure if this is the best way to do the "timers" field,
 but it works for me at the moment.

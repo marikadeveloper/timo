@@ -1,11 +1,11 @@
 import dayjs from 'dayjs';
 import { attachInfoToTasks } from '../../utils/exportUtils';
-import { hasTaskEnded } from '../../utils/taskUtils';
 import db from '../db';
 import {
   Task,
   TaskCreateInput,
   TaskExtended,
+  TaskStatus,
   TaskUpdateInput,
 } from '../interfaces/Task';
 import { deleteTimers, startTimer } from './timerService';
@@ -15,11 +15,18 @@ const getAllTasks = async () => {
 };
 
 const getTasksByDate = async (date: dayjs.Dayjs) => {
-  // TODO: how to handle tasks that span multiple days?
   const tasks = await db.tasks
-    .where('createdAt')
-    .equals(date.format('YYYY-MM-DD'))
+    .where('status')
+    .equals(TaskStatus.ACTIVE)
+    .or('status')
+    .equals(TaskStatus.FINISHED)
+    .and(
+      (task) =>
+        dayjs(task.lastEndedAt).format('YYYY-MM-DD') ===
+        date.format('YYYY-MM-DD'),
+    )
     .toArray();
+  // TODO: check fusi orari
 
   // attach project, parent, and timers to each task
   await attachInfoToTasks(tasks);
@@ -43,7 +50,7 @@ const getOngoingTask = async () => {
   const lastTask = await getLastTask();
   if (!lastTask) return null;
 
-  if (await hasTaskEnded(lastTask.id!)) return null;
+  if (lastTask.status === TaskStatus.FINISHED) return null;
 
   await attachInfoToTasks([lastTask]);
   return lastTask as TaskExtended;
@@ -72,11 +79,12 @@ const createTask = async ({ description, projectId }: TaskCreateInput) => {
 };
 
 const addTaskToDb = async ({ description, projectId }: TaskCreateInput) => {
-  const newTask: TaskCreateInput & { id?: number } = {
+  const newTask: TaskCreateInput & { id?: number; status: TaskStatus } = {
     description,
     projectId,
     code: '', // Temporary code
     createdAt: dayjs().format('YYYY-MM-DD'),
+    status: TaskStatus.ACTIVE,
   };
 
   const taskId = await db.tasks.add(newTask);

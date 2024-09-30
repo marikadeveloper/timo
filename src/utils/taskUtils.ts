@@ -1,10 +1,7 @@
 import dayjs from 'dayjs';
 import { Task } from '../data/interfaces/Task';
 import { Timer } from '../data/interfaces/Timer';
-import {
-  getLatestTimerByTaskId,
-  getTimersByTaskId,
-} from '../data/services/timerService';
+import { getTimersByTaskId } from '../data/services/timerService';
 import { getDurationStringFromMilliseconds } from './dateUtils';
 
 const allTimersStopped = (timers: Timer[]): boolean => {
@@ -85,16 +82,9 @@ const isCurrentDaysActivity = (
   return timers.some((timer) => dayjs(timer.start).isSame(currentDay, 'day'));
 };
 
-const hasTaskEnded = async (taskId: number): Promise<boolean> => {
-  const lastTaskTimer = await getLatestTimerByTaskId(taskId);
-
-  return !!lastTaskTimer?.end;
-};
-
 export {
   getTaskDuration,
   getTaskDurationString,
   getTasksDurationString,
-  hasTaskEnded,
   isCurrentDaysActivity,
 };

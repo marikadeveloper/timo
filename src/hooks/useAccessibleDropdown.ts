@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { SelectOption } from '../components/select';
+import { SelectOption } from '../components/shared/select';
 import {
   registerClosedDropdownHandlers,
   registerOpenDropdownHandlers,
