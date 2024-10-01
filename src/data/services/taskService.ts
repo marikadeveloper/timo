@@ -15,8 +15,6 @@ const getAllTasks = async () => {
 };
 
 const getTasksByDate = async (date: dayjs.Dayjs) => {
-  console.log({ date });
-
   const tasks = await db.tasks
     .where('status')
     .equals(TaskStatus.ACTIVE)

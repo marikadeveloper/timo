@@ -54,6 +54,8 @@ const fetchTasksToExport = async (
     .between(
       dayjs(rangeStart).format('YYYY-MM-DD'),
       dayjs(rangeEnd).format('YYYY-MM-DD'),
+      true,
+      true,
     )
     .toArray();
 

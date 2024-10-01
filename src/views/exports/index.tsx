@@ -130,10 +130,9 @@ const Exports: React.FC = () => {
     return output.join(' ');
   };
 
-  const handleExport = () => {
-    console.log('Exporting...');
+  const handleExport = async () => {
     try {
-      exportTasks({
+      await exportTasks({
         dateRange: getDateRangeValueAsArray(dateRange),
       });
     } catch (error) {

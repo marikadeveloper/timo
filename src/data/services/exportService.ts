@@ -107,8 +107,6 @@ const exportTasks = async ({
 */
 
 const exportTasks = async ({ dateRange, tasks }: ExportTasksFilter) => {
-  console.log({ dateRange });
-
   try {
     if (!dateRange) {
       throw new Error('Missing date range');
@@ -125,6 +123,9 @@ const exportTasks = async ({ dateRange, tasks }: ExportTasksFilter) => {
     } else {
       tasksToExport = await fetchTasksToExport(rangeStart, rangeEnd);
     }
+
+    console.log({ tasksToExport });
+
     if (!tasksToExport.length) {
       throw new Error('No activities found');
     }
