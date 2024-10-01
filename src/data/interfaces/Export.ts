@@ -5,9 +5,10 @@ import { Timer } from './Timer';
 type ExportType = 'day' | 'week' | 'month' | 'year' | 'range';
 type ExportTasksFilter = {
   exportType: ExportType;
+  codeFilter?: string;
   rangeStart?: Date;
   rangeEnd?: Date;
-  codeFilter?: string;
+  tasks?: Task[];
 };
 type ExportTask = Task & {
   parent?: Task;

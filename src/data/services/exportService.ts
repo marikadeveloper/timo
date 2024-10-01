@@ -111,17 +111,19 @@ const exportTasks = async ({
   exportType,
   rangeStart,
   rangeEnd,
+  tasks,
 }: ExportTasksFilter) => {
   validateExportInput(exportType, rangeStart, rangeEnd);
 
   const exportTitle = getExportTitle(exportType, rangeStart, rangeEnd);
   let csv = initializeCsvHeader(exportTitle);
 
-  const tasksToExport = await fetchTasksToExport(
-    exportType,
-    rangeStart,
-    rangeEnd,
-  );
+  let tasksToExport = [];
+  if (tasks) {
+    tasksToExport = tasks;
+  } else {
+    tasksToExport = await fetchTasksToExport(exportType, rangeStart, rangeEnd);
+  }
   if (!tasksToExport.length) {
     throw new Error('No activities found');
   }

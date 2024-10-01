@@ -1,5 +1,6 @@
 import React from 'react';
 import { Task } from '../../../data/interfaces/Task';
+import { exportTasks } from '../../../data/services/exportService';
 import IconButton from '../../shared/icon-button';
 
 type TasksExportButtonProps = {
@@ -7,8 +8,9 @@ type TasksExportButtonProps = {
 };
 
 const TasksExportButton: React.FC<TasksExportButtonProps> = ({ tasks }) => {
-  const exportTasks = () => {
+  const handleExportTasks = () => {
     // TODO: export given tasks as CSV
+    exportTasks({ exportType: 'day', tasks });
   };
 
   return (
@@ -16,7 +18,7 @@ const TasksExportButton: React.FC<TasksExportButtonProps> = ({ tasks }) => {
       iconName='code-download'
       ariaLabel='Download tasks as CSV'
       iconAriaLabel='Arrow pointing down'
-      onClick={exportTasks}
+      onClick={handleExportTasks}
     />
   );
 };
