@@ -1,8 +1,17 @@
 .task {
   display: grid;
   gap: 8px;
-  grid-template-columns: min-content 1fr min-content;
+  grid-template-columns: 1fr min-content;
+  grid-template-areas: 'code duration' 'description description';
+  .task-code {
+    grid-area: code;
+    width: min-content;
+  }
   &__duration {
+    grid-area: duration;
     white-space: nowrap;
+  }
+  &__description {
+    grid-area: description;
   }
 }

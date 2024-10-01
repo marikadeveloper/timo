@@ -51,6 +51,7 @@ const ProjectCreate: React.FC = () => {
           className='project-create__code'
           type='text'
           placeholder='Project code'
+          required
           value={projectCreateInput.code}
           onChange={(e) => onFieldChange('code', e.target.value)}
         />

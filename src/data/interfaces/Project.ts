@@ -5,7 +5,7 @@ interface Project {
   name: string;
 }
 interface ProjectCreateInput {
-  code?: string;
+  code: string;
   color: string;
   name: string;
 }

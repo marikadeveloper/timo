@@ -13,7 +13,7 @@ const Task: React.FC<TaskProps> = ({ task }) => {
   return (
     <Card className='task'>
       <TaskCode task={task} />
-      <p>{task.description}</p>
+      <p className='task__description'>{task.description}</p>
       <span className='task__duration'>
         <small>{getTaskDurationString(task.timers)}</small>
       </span>

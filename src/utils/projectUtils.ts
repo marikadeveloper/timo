@@ -1,3 +1,5 @@
+import db from '../data/db';
+
 const PROJECT_CODE_MIN_LENGTH = 3;
 const PROJECT_CODE_MAX_LENGTH = 5;
 // only alphanumeric characters, length between 3 and 5 characters inclusive
@@ -31,11 +33,9 @@ const isProjectCodeValid = (code: string): boolean => {
   return PROJECT_CODE_REGEX.test(code);
 };
 
-const generateProjectCode = (projectName: string): string => {
-  return projectName
-    .replace(/[^a-zA-Z0-9]/g, '')
-    .toUpperCase()
-    .slice(0, PROJECT_CODE_MIN_LENGTH);
+const isProjectCodeDuplicate = async (code: string): Promise<boolean> => {
+  const project = await db.projects.where({ code }).first();
+  return project !== undefined;
 };
 
 const getRandomProjectColor = (theme: 'light' | 'dark') => {
@@ -44,11 +44,19 @@ const getRandomProjectColor = (theme: 'light' | 'dark') => {
   ];
 };
 
+const isColorContrastSufficient = (hexcolor: string) => {
+  // check if black text is readable on the background color
+  const idealFont =
+    parseInt(hexcolor.substring(1), 16) > 0xffffff / 2 ? 'black' : 'white';
+  return idealFont === 'black';
+};
+
 export {
   PROJECTS_DEFAULT_COLORS,
   PROJECT_CODE_MAX_LENGTH,
   PROJECT_CODE_MIN_LENGTH,
-  generateProjectCode,
   getRandomProjectColor,
+  isColorContrastSufficient,
+  isProjectCodeDuplicate,
   isProjectCodeValid,
 };

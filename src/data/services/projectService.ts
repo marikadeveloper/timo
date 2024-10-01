@@ -1,6 +1,7 @@
 import {
-  generateProjectCode,
   getRandomProjectColor,
+  isColorContrastSufficient,
+  isProjectCodeDuplicate,
   isProjectCodeValid,
   PROJECT_CODE_MAX_LENGTH,
   PROJECT_CODE_MIN_LENGTH,
@@ -18,10 +19,16 @@ const getProjectById = async (id: number) => {
 };
 
 const createProject = async ({ code, name, color }: ProjectCreateInput) => {
-  if (code && !isProjectCodeValid(code)) {
+  if (!code?.trim()) {
+    throw new Error('Code is required');
+  }
+  if (!isProjectCodeValid(code)) {
     throw new Error(
       `Invalid project code. Must be between ${PROJECT_CODE_MIN_LENGTH} and ${PROJECT_CODE_MAX_LENGTH} letters, no spaces or special characters`,
     );
+  }
+  if (await isProjectCodeDuplicate(code)) {
+    throw new Error('Project with this code already exists');
   }
   if (!name?.trim()) {
     throw new Error('Name is required');
@@ -29,10 +36,17 @@ const createProject = async ({ code, name, color }: ProjectCreateInput) => {
   if (!color?.trim()) {
     // assign a random color
     color = getRandomProjectColor('light');
+  } else {
+    // validate color
+    if (!isColorContrastSufficient(color)) {
+      throw new Error(
+        'Black text is not readable on this background color. Choose a lighter one',
+      );
+    }
   }
 
   return db.projects.add({
-    code: code || generateProjectCode(name),
+    code: code,
     name,
     color,
   });
