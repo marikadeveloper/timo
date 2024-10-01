@@ -1,7 +1,7 @@
 const PROJECT_CODE_MIN_LENGTH = 3;
-const PROJECT_CODE_MAX_LENGTH = 10;
-// only alphanumeric characters, length between 3 and 10 characters inclusive
-const PROJECT_CODE_REGEX = /^[a-zA-Z0-9]{3,10}$/;
+const PROJECT_CODE_MAX_LENGTH = 5;
+// only alphanumeric characters, length between 3 and 5 characters inclusive
+const PROJECT_CODE_REGEX = /^[a-zA-Z0-9]{3,5}$/;
 const PROJECTS_DEFAULT_COLORS = {
   dark: [
     '#393b42',
