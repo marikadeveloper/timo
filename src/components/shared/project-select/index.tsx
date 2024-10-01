@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Project } from '../../../../data/interfaces/Project';
-import { getAllProjects } from '../../../../data/services/projectService';
-import Select, { SelectOption } from '../../../shared/select';
+import { Project } from '../../../data/interfaces/Project';
+import { getAllProjects } from '../../../data/services/projectService';
+import Select, { SelectOption } from '../select';
 
 type ProjectSelectProps = {
   value?: number;
-  onChange: (value: string) => void;
+  onChange: (value: number) => void;
 };
 
 const ProjectSelect: React.FC<ProjectSelectProps> = ({ onChange, value }) => {
@@ -24,9 +24,13 @@ const ProjectSelect: React.FC<ProjectSelectProps> = ({ onChange, value }) => {
     fetchProjects();
   }, []);
 
+  const handleOnChange = (value: string) => {
+    onChange(parseInt(value));
+  };
+
   return (
     <Select
-      onChange={onChange}
+      onChange={handleOnChange}
       options={projects}
       placeholder='Select a project'
       value={value?.toString() || ''}

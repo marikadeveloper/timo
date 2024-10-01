@@ -4,7 +4,6 @@ import {
   formatTasksToCsv,
   getExportTitle,
   initializeCsvHeader,
-  validateExportInput,
 } from '../../utils/exportUtils';
 import { getTasksDurationString } from '../../utils/taskUtils';
 import { ExportTasksFilter } from '../interfaces/Export';
@@ -107,33 +106,42 @@ const exportTasks = async ({
 };
 */
 
-const exportTasks = async ({
-  exportType,
-  rangeStart,
-  rangeEnd,
-  tasks,
-}: ExportTasksFilter) => {
-  validateExportInput(exportType, rangeStart, rangeEnd);
+const exportTasks = async ({ dateRange, tasks }: ExportTasksFilter) => {
+  console.log({ dateRange });
 
-  const exportTitle = getExportTitle(exportType, rangeStart, rangeEnd);
-  let csv = initializeCsvHeader(exportTitle);
+  try {
+    if (!dateRange) {
+      throw new Error('Missing date range');
+    }
 
-  let tasksToExport = [];
-  if (tasks) {
-    tasksToExport = tasks;
-  } else {
-    tasksToExport = await fetchTasksToExport(exportType, rangeStart, rangeEnd);
+    let [rangeStart, rangeEnd] = dateRange;
+
+    const exportTitle = getExportTitle(rangeStart, rangeEnd);
+    let csv = initializeCsvHeader(exportTitle);
+
+    let tasksToExport = [];
+    if (tasks) {
+      tasksToExport = tasks;
+    } else {
+      tasksToExport = await fetchTasksToExport(rangeStart, rangeEnd);
+    }
+    if (!tasksToExport.length) {
+      throw new Error('No activities found');
+    }
+
+    csv += formatTasksToCsv(tasksToExport);
+
+    const totalDuration = await getTasksDurationString(tasksToExport);
+    csv += `,,,TOT: ${totalDuration}\n`;
+
+    downloadTasksCsv(csv, rangeStart, rangeEnd);
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error(String(error));
+    }
   }
-  if (!tasksToExport.length) {
-    throw new Error('No activities found');
-  }
-
-  csv += formatTasksToCsv(tasksToExport, exportType);
-
-  const totalDuration = await getTasksDurationString(tasksToExport);
-  csv += `,,,TOT: ${totalDuration}\n`;
-
-  downloadTasksCsv(csv, exportType, rangeStart, rangeEnd);
 };
 
 export { exportTasks };

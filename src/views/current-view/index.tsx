@@ -1,5 +1,6 @@
 import React from 'react';
 import { useViewContext } from '../../context/viewContext';
+import Exports from '../exports';
 import Projects from '../projects';
 import Tasks from '../tasks';
 
@@ -12,6 +13,10 @@ const CurrentView: React.FC = () => {
 
   if (view === 'projects') {
     return <Projects />;
+  }
+
+  if (view === 'exports') {
+    return <Exports />;
   }
 
   return (

@@ -1,6 +1,6 @@
 .task {
   display: grid;
-  gap: 8px;
+  gap: 2px;
   grid-template-columns: 1fr min-content;
   grid-template-areas: 'code duration' 'description description';
   .task-code {

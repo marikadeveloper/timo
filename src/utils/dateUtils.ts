@@ -2,6 +2,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import weekDay from 'dayjs/plugin/weekday';
+import { DateRangeValue } from '../components/shared/date-range-picker';
 
 dayjs.extend(relativeTime);
 dayjs.extend(customParseFormat);
@@ -68,8 +69,29 @@ const getLocalStoragePinnedDate = (): Dayjs | null => {
   return pinnedDate ? dayjs(pinnedDate) : null;
 };
 
+const getDateRangeValueAsArray = (
+  dateRange: DateRangeValue,
+): null | [Date, Date] => {
+  if (!dateRange) return null;
+
+  // 1. dateRange is a date
+  if (!Array.isArray(dateRange)) {
+    return [dateRange, dateRange];
+  }
+
+  // 2. dateRange is an array
+  const [start, end] = dateRange;
+  if (!start || !end) return null;
+
+  if (start && !end) return [start, start];
+  if (!start && end) return [end, end];
+
+  return [start, end];
+};
+
 export {
   DEFAULT_DATE_FORMAT,
+  getDateRangeValueAsArray,
   getDurationStringFromMilliseconds,
   getFormattedDayVerbose,
   getLocalStoragePinnedDate,

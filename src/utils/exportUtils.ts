@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
+import { DateRangeValue } from '../components/shared/date-range-picker';
 import db from '../data/db';
-import { ExportTask, ExportType } from '../data/interfaces/Export';
+import { ExportTask } from '../data/interfaces/Export';
 import { Project } from '../data/interfaces/Project';
 import { Task } from '../data/interfaces/Task';
 import { Timer } from '../data/interfaces/Timer';
@@ -9,60 +10,34 @@ import { getTaskById } from '../data/services/taskService';
 import { getTimersByTaskId } from '../data/services/timerService';
 import { getTaskDurationString } from './taskUtils';
 
-const getExportTitle = (
-  exportType: ExportType,
-  rangeStart?: Date,
-  rangeEnd?: Date,
-): string => {
-  if (exportType === 'range') {
-    return `Export range:,${dayjs(rangeStart).format('DD/MM/YYYY')} to ${dayjs(
-      rangeEnd,
-    ).format('DD/MM/YYYY')},,,\n`;
-  }
-  if (exportType === 'day') {
+const getExportTitle = (rangeStart: Date, rangeEnd: Date): string => {
+  // same date -> Export day: DD/MM/YYYY
+  // different date -> Export range: DD/MM/YYYY to DD/MM/YYYY
+
+  if (dayjs(rangeStart).isSame(rangeEnd, 'day')) {
     return `Export day:,${dayjs(rangeStart).format('DD/MM/YYYY')},,,\n`;
   }
-  if (['week', 'month', 'year'].includes(exportType)) {
-    return `Export ${exportType}:,${dayjs()
-      .startOf(exportType)
-      .format('DD/MM/YYYY')} to ${dayjs()
-      .endOf(exportType)
-      .format('DD/MM/YYYY')},,,\n`;
-  }
-  return '';
+
+  return `Export range:,${dayjs(rangeStart).format('DD/MM/YYYY')} to ${dayjs(
+    rangeEnd,
+  ).format('DD/MM/YYYY')},,,\n`;
 };
 
-const getExportFileName = (
-  exportType: ExportType,
-  rangeStart?: Date,
-  rangeEnd?: Date,
-): string => {
-  if (exportType === 'range') {
-    return `export_${dayjs(rangeStart).format('DDMMYYYY')}_to_${dayjs(
-      rangeEnd,
-    ).format('DDMMYYYY')}.csv`;
-  }
-  if (exportType === 'day') {
+const getExportFileName = (rangeStart: Date, rangeEnd: Date): string => {
+  // same date -> export_DDMMYYYY.csv
+  // different date -> export_DDMMYYYY_to_DDMMYYYY.csv
+
+  if (dayjs(rangeStart).isSame(rangeEnd, 'day')) {
     return `export_${dayjs(rangeStart).format('DDMMYYYY')}.csv`;
   }
-  if (['week', 'month', 'year'].includes(exportType)) {
-    return `export_${dayjs()
-      .startOf(exportType)
-      .format('DDMMYYYY')}_to_${dayjs()
-      .endOf(exportType)
-      .format('DDMMYYYY')}.csv`;
-  }
-  return '';
+
+  return `export_${dayjs(rangeStart).format('DDMMYYYY')}_to_${dayjs(
+    rangeEnd,
+  ).format('DDMMYYYY')}.csv`;
 };
 
-const validateExportInput = (
-  exportType: ExportType,
-  rangeStart?: Date,
-  rangeEnd?: Date,
-): void => {
-  if (!exportType) throw new Error('Missing export type');
-  if (exportType === 'range' && (!rangeStart || !rangeEnd))
-    throw new Error('Missing range start or range end');
+const validateExportInput = (dateRange: DateRangeValue): void => {
+  if (!dateRange) throw new Error('Missing date range');
 };
 
 const initializeCsvHeader = (exportTitle: string): string => {
@@ -70,16 +45,15 @@ const initializeCsvHeader = (exportTitle: string): string => {
 };
 
 const fetchTasksToExport = async (
-  exportType: ExportType,
-  rangeStart?: Date,
-  rangeEnd?: Date,
+  rangeStart: Date,
+  rangeEnd: Date,
 ): Promise<ExportTask[]> => {
-  const exportUnitOfTime = exportType === 'range' ? 'day' : exportType;
+  console.log('fetchTasksToExport', rangeStart, rangeEnd);
   const tasks = await db.tasks
     .where('createdAt')
     .between(
-      dayjs(rangeStart).startOf(exportUnitOfTime).toDate(),
-      dayjs(rangeEnd).endOf(exportUnitOfTime).toDate(),
+      dayjs(rangeStart).format('YYYY-MM-DD'),
+      dayjs(rangeEnd).format('YYYY-MM-DD'),
     )
     .toArray();
 
@@ -104,10 +78,7 @@ const attachInfoToTasks = async (
   );
 };
 
-const formatTasksToCsv = (
-  tasks: ExportTask[],
-  exportType: ExportType,
-): string => {
+const formatTasksToCsv = (tasks: ExportTask[]): string => {
   const isNewDay = (prevTask: Task, currentTask: Task): boolean => {
     return (
       dayjs(prevTask.createdAt).format('DD/MM/YYYY') !==
@@ -134,7 +105,7 @@ const formatTasksToCsv = (
       const duration = getTaskDurationString(task.timers) || '-';
       const projectName = task.projectId ? task.project?.code || '' : '';
       const dateHeader =
-        exportType !== 'day' && (i === 0 || isNewDay(tasks[i - 1], task))
+        i === 0 || isNewDay(tasks[i - 1], task)
           ? `,,,${dayjs(task.createdAt).format('DD/MM/YYYY')},,,,\n`
           : '';
       return `${dateHeader}"${projectName}","${task.description}",${timers},${duration}\n`;
@@ -144,18 +115,14 @@ const formatTasksToCsv = (
 
 const downloadTasksCsv = (
   csv: string,
-  exportType: ExportType,
-  rangeStart?: Date,
-  rangeEnd?: Date,
+  rangeStart: Date,
+  rangeEnd: Date,
 ): void => {
   const csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const csvUrl = URL.createObjectURL(csvData);
   const link = document.createElement('a');
   link.setAttribute('href', csvUrl);
-  link.setAttribute(
-    'download',
-    getExportFileName(exportType, rangeStart, rangeEnd),
-  );
+  link.setAttribute('download', getExportFileName(rangeStart, rangeEnd));
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);

@@ -4,7 +4,7 @@ import useCreateTask from '../../../hooks/useCreateTask';
 import Button from '../../shared/button';
 import FormErrors from '../../shared/form-errors';
 import Input from '../../shared/input';
-import ProjectSelect from './project-select';
+import ProjectSelect from '../../shared/project-select';
 import './styles.scss';
 
 const emptyTaskCreateInput: TaskCreateInput = {
@@ -23,7 +23,7 @@ const TaskCreate: React.FC = () => {
     }
   }, [success]);
 
-  const onFieldChange = (field: keyof TaskCreateInput, value: string) => {
+  const onFieldChange = (field: keyof TaskCreateInput, value: string | number) => {
     setTaskCreateInput((prev) => ({
       ...prev,
       [field]: value,

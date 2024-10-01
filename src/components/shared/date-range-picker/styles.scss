@@ -1,0 +1,36 @@
+@import './src/assets/scss/mixins.scss';
+
+.date-range-picker {
+  .react-daterange-picker__calendar {
+    z-index: 2;
+  }
+  .react-daterange-picker__wrapper {
+    @include timo-border--flat;
+  }
+  .react-daterange-picker__button:enabled:hover
+    .react-daterange-picker__button__icon,
+  .react-daterange-picker__button:enabled:focus
+    .react-daterange-picker__button__icon {
+    stroke: var(--color-error);
+  }
+  .react-calendar {
+    @include timo-border;
+    font-family: var(--font-family);
+    &__navigation__arrow {
+      font-size: 18px;
+    }
+    &__tile {
+      border-radius: 4px;
+      &--active,
+      &--now {
+        background: var(--color-primary);
+        color: #fff;
+        font-weight: 600;
+        &:hover,
+        &:focus {
+          background: var(--color-primary--darker);
+        }
+      }
+    }
+  }
+}

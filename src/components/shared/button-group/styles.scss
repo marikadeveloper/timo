@@ -1,0 +1,18 @@
+.button-group {
+  display: flex;
+  gap: 6px;
+  .button.active {
+    background: #000;
+    color: #fff;
+    font-weight: 600;
+    position: relative;
+    &::before {
+      content: url('./src/assets/images/checkmark-circle-outline.svg');
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      height: 18px;
+      width: 18px;
+    }
+  }
+}
