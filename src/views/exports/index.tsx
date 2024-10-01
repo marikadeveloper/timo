@@ -112,13 +112,13 @@ const Exports: React.FC = () => {
 
   const getSummary = () => {
     if (!dateRangeType && !isCustomDateRangeSelected(dateRange) && !project) {
-      return 'Export all tasks (can be slow)';
+      return 'Select date range and (optional) project';
     }
     // example output: Export tasks of this week, of project 1
     const output: string[] = ['Export tasks'];
 
     if (dateRangeType) {
-      output.push(`of ${dateRangeType}`);
+      output.push(`of ${dateRangeType.replace('-', ' ')}`);
     } else if (isCustomDateRangeSelected(dateRange)) {
       output.push('of custom range');
     }

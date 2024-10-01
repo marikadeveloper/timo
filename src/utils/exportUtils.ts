@@ -108,7 +108,7 @@ const formatTasksToCsv = (tasks: ExportTask[]): string => {
       const projectName = task.projectId ? task.project?.code || '' : '';
       const dateHeader =
         i === 0 || isNewDay(tasks[i - 1], task)
-          ? `,,,${dayjs(task.createdAt).format('DD/MM/YYYY')},,,,\n`
+          ? `,,,${dayjs(task.createdAt).format('DD/MM/YYYY')}\n`
           : '';
       return `${dateHeader}"${projectName}","${task.description}",${timers},${duration}\n`;
     })
