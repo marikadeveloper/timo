@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@wojtekmaj/react-daterange-picker": "^6.0.0",
@@ -21,7 +23,16 @@
     "react-svg": "^16.1.34"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^1.9.0",
     "@eslint/js": "^9.10.0",
+    "@storybook/addon-essentials": "^8.3.4",
+    "@storybook/addon-interactions": "^8.3.4",
+    "@storybook/addon-links": "^8.3.4",
+    "@storybook/addon-onboarding": "^8.3.4",
+    "@storybook/blocks": "^8.3.4",
+    "@storybook/react": "^8.3.4",
+    "@storybook/react-vite": "^8.3.4",
+    "@storybook/test": "^8.3.4",
     "@types/chrome": "^0.0.270",
     "@types/node": "^22.5.4",
     "@types/react": "^18.3.5",
@@ -30,10 +41,17 @@
     "eslint": "^9.10.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.11",
+    "eslint-plugin-storybook": "^0.9.0",
     "globals": "^15.9.0",
     "sass": "^1.78.0",
+    "storybook": "^8.3.4",
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.5.0",
     "vite": "^5.4.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
   }
 }
