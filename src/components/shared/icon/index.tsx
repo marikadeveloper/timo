@@ -20,7 +20,7 @@ const Icon: React.FC<IconProps> = ({
       style={{
         color: fill,
       }}
-      src={`src/assets/images/${name}.svg`}
+      src={`assets/images/${name}.svg`}
     />
   );
 };

@@ -1,16 +1,25 @@
 import React from 'react';
-import { Task } from '../../../data/interfaces/Task';
+import { TaskExtended } from '../../../data/interfaces/Task';
 import { exportTasks } from '../../../data/services/exportService';
 import IconButton from '../../shared/icon-button';
 
 type TasksExportButtonProps = {
-  tasks: Task[];
+  tasks: TaskExtended[];
+};
+
+const getDateRangeFromTasks = (tasks: TaskExtended[]): [Date, Date] => {
+  const [start, end] = [
+    tasks[0].timers[0].start,
+    tasks[tasks.length - 1].timers[0].start,
+  ];
+
+  return [start, end];
 };
 
 const TasksExportButton: React.FC<TasksExportButtonProps> = ({ tasks }) => {
   const handleExportTasks = () => {
-    // TODO: export given tasks as CSV
-    exportTasks({ exportType: 'day', tasks });
+    const dateRange: [Date, Date] = getDateRangeFromTasks(tasks);
+    exportTasks({ dateRange, tasks });
   };
 
   return (
