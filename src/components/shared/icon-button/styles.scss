@@ -2,7 +2,9 @@
 
 .icon-button {
   @include base-button;
-  padding: 2px;
+  & {
+    padding: 2px;
+  }
 
   &--whiteBg {
     background: #fff;

@@ -6,8 +6,10 @@
   text-align: left;
   &__button {
     @include base-button;
-    position: relative;
-    z-index: 1;
+    & {
+      position: relative;
+      z-index: 1;
+    }
     .chevron {
       display: inline-block;
     }

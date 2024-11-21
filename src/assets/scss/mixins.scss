@@ -11,13 +11,15 @@
 }
 
 @mixin base-button {
-  @include timo-border;
-  background: unset;
-  cursor: pointer;
-  height: var(--input-height);
-  margin: 0;
+  & {
+    @include timo-border;
+    background: unset;
+    cursor: pointer;
+    height: var(--input-height);
+    margin: 0;
 
-  &:active {
-    border-width: 1px;
+    &:active {
+      border-width: 1px;
+    }
   }
 }
